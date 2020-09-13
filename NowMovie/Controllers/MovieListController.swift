@@ -87,7 +87,7 @@ extension MovieListController {
 extension MovieListController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = viewModel.movieAtIndex(indexPath.row)
-        let controller = MovieDetailController(titleName: movie.title)
+        let controller = MovieDetailController(viewModel: MovieViewModel(movie: movie))
         navigationController?.pushViewController(controller, animated: true)
     }
 }

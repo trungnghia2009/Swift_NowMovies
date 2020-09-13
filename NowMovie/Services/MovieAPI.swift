@@ -22,6 +22,7 @@ struct MovieResult: Decodable {
     var title: String
     var voteAverage: Double
     var posterPath: String
+    var backdropPath: String
     var overview: String
 }
 
@@ -68,7 +69,7 @@ class MovieAPI {
                 let jsonData = try! decoder.decode(Movies.self, from: data)
                 jsonData.results.forEach { (movieResult) in
                     let coverImageURL = "https://image.tmdb.org/t/p/w200" + movieResult.posterPath
-                    let detailImageURL = "https://image.tmdb.org/t/p/w500" + movieResult.posterPath
+                    let detailImageURL = "https://image.tmdb.org/t/p/w500" + movieResult.backdropPath
                     
                     let movie = Movie(id: movieResult.id,
                                            title: movieResult.title,
