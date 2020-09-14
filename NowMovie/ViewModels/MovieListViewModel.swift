@@ -32,13 +32,15 @@ class MovieListViewModel {
     }
     
     func fetchMovies(type: MovieType) {
-        service?.fetchMovies(type, completion: { [weak self] (result) in
-            switch result {
-            case .success(let movies):
-                self?.movies = movies
-            case .failure(let error):
-                print(error)
+        service?.fetchMovies(type)
+        .observe(on: UIScheduler())
+            .startWithResult{ [weak self] (result) in
+                switch result {
+                case .success(let movies):
+                    self?.movies = movies
+                case .failure(let error):
+                    print(error)
+                }
             }
-        })
     }
 }
