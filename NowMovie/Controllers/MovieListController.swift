@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveSwift
 
 class MovieListController: UITableViewController {
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveSwift
 
 class MovieListViewModel {
     var updateData: (() -> Void)?

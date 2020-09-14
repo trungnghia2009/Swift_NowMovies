@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveSwift
 
 private let nowPlayingQuery = "https://api.themoviedb.org/3/movie/now_playing?api_key=989854c6c0be60cc4b2c40eb24cddeda&language=en-US&page=1"
 private let popularQuery = "https://api.themoviedb.org/3/movie/popular?api_key=989854c6c0be60cc4b2c40eb24cddeda&language=en-US&page=1"
