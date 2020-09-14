@@ -11,17 +11,17 @@ import UIKit
 class MovieListController: UITableViewController {
     
     // MARK: - Properties
-    var movieType = MovieType.allCases.first?.description
+    let movieTypeDefault = MovieType.allCases[0]
     var viewModel = MovieListViewModel(service: MovieService())
     
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupTableView()
         setupObserver()
-        viewModel.fetchMovies(type: .topRated)
+        viewModel.fetchMovies(type: movieTypeDefault)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,15 +33,16 @@ class MovieListController: UITableViewController {
     // MARK: - Helpers
     private func setupObserver() {
         viewModel.updateData = { [weak self] in
-            self?.tableView.reloadData()
-            print("Got data")
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
         }
     }
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = movieType
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "film"),
+        navigationItem.title = movieTypeDefault.description
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "flame"),
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRightBarButton))
@@ -61,7 +62,6 @@ class MovieListController: UITableViewController {
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
     }
-
 
 }
 

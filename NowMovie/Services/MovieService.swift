@@ -26,12 +26,22 @@ struct MovieResult: Decodable {
     var overview: String
 }
 
-class MovieService {
+enum MovieServiceError: Error {
+    case unknownError
+    case statusCodeError
+    case dataError
+    case decodingError
+}
+
+protocol MovieServiceProtocol {
+    func fetchMovies(_ type: MovieType, completion: @escaping (Result<[Movie], Error>) -> Void)
+}
+
+class MovieService: MovieServiceProtocol {
     
     private var resourceURL: URL?
     
-    func fetchMovies(_ type: MovieType, completion: @escaping ([Movie]) -> Void) {
-        var movies = [Movie]()
+    func fetchMovies(_ type: MovieType, completion: @escaping (Result<[Movie], Error>) -> Void) {
         
         switch type {
         case .nowPlaying:
@@ -46,43 +56,51 @@ class MovieService {
         
         guard let resourceURL = resourceURL else {
             print("URL for \(type.description) got error")
-            completion(movies)
+            completion(.failure(MovieServiceError.unknownError))
             return
         }
         
         URLSession.shared.dataTask(with: resourceURL) { (data, response, error) in
             if let error = error {
                 print(error.localizedDescription)
+                completion(.failure(error))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse,
                 (200...299).contains(httpResponse.statusCode) else {
                     print("Error with the response")
+                    completion(.failure(MovieServiceError.statusCodeError))
                     return
             }
             
             if let data = data {
+                var movies = [Movie]()
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                let jsonData = try! decoder.decode(Movies.self, from: data)
-                jsonData.results.forEach { (movieResult) in
-                    let coverImageURL = "https://image.tmdb.org/t/p/w200" + movieResult.posterPath
-                    let detailImageURL = "https://image.tmdb.org/t/p/w500" + movieResult.backdropPath
+                do {
+                    let jsonData = try decoder.decode(Movies.self, from: data)
                     
-                    let movie = Movie(id: movieResult.id,
-                                           title: movieResult.title,
-                                           rating: movieResult.voteAverage,
-                                           overview: movieResult.overview,
-                                           coverImageURL: coverImageURL,
-                                           detailImageURL: detailImageURL)
-                    movies.append(movie)
+                    jsonData.results.forEach { (movieResult) in
+                        let coverImageURL = "https://image.tmdb.org/t/p/w200" + movieResult.posterPath
+                        let detailImageURL = "https://image.tmdb.org/t/p/w500" + movieResult.backdropPath
+                        
+                        let movie = Movie(id: movieResult.id,
+                                               title: movieResult.title,
+                                               rating: movieResult.voteAverage,
+                                               overview: movieResult.overview,
+                                               coverImageURL: coverImageURL,
+                                               detailImageURL: detailImageURL)
+                        movies.append(movie)
+                    }
+                    completion(.success(movies))
+                } catch {
+                    completion(.failure(MovieServiceError.decodingError))
                 }
-                completion(movies)
                 
             } else {
-                completion(movies)
+                completion(.failure(MovieServiceError.dataError))
             }
             
         }.resume()

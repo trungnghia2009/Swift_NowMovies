@@ -16,9 +16,9 @@ class MovieListViewModel {
         }
     }
     
-    private var service: MovieService?
+    private var service: MovieServiceProtocol?
     
-    init(service: MovieService) {
+    init(service: MovieServiceProtocol) {
         self.service = service
     }
     
@@ -31,9 +31,12 @@ class MovieListViewModel {
     }
     
     func fetchMovies(type: MovieType) {
-        service?.fetchMovies(type, completion: { [weak self] (movies) in
-            DispatchQueue.main.async {
+        service?.fetchMovies(type, completion: { [weak self] (result) in
+            switch result {
+            case .success(let movies):
                 self?.movies = movies
+            case .failure(let error):
+                print(error)
             }
         })
     }

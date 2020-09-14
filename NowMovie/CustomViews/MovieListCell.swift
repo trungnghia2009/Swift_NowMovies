@@ -32,7 +32,6 @@ class MovieListCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Star War Star War Star War Star War Star War Star War"
         label.numberOfLines = 2
         return label
     }()
@@ -41,7 +40,6 @@ class MovieListCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor  = .secondaryLabel
-        label.text = "Rating: 8.9"
         return label
     }()
     
@@ -70,10 +68,11 @@ class MovieListCell: UITableViewCell {
     // MARK: - Helpers
     private func setup() {
         guard let viewModel = viewModel else { return }
-        guard let url = URL(string: viewModel.coverImageURL) else { return }
         
-        movieImageView.load(url: url)
         titleLabel.text = viewModel.title
         ratingLabel.text = viewModel.rating
+        if let url = URL(string: viewModel.coverImageURL) {
+            movieImageView.load(url: url)
+        }
     }
 }

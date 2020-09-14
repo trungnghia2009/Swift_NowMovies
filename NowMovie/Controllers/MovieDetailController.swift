@@ -75,7 +75,6 @@ class MovieDetailController: UIViewController {
         // Movie image
         view.addSubview(movieImageView)
         movieImageView.setDimensions(width: view.frame.size.width, height: 250)
-        movieImageView.centerX(inView: view)
         movieImageView.anchor(top: titleLabel.bottomAnchor, paddingTop: 20)
         if let url = URL(string: viewModel.detailImageUrl) {
             movieImageView.load(url: url)
