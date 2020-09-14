@@ -11,8 +11,8 @@ import UIKit
 class MovieListController: UITableViewController {
     
     // MARK: - Properties
-    var movieType = MovieType.allCases[0].description
-    var viewModel = MovieListViewModel(service: MovieAPI())
+    var movieType = MovieType.allCases.first?.description
+    var viewModel = MovieListViewModel(service: MovieService())
     
     
     // MARK: - Lifecycle

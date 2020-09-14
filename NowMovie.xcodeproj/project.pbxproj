@@ -14,7 +14,7 @@
 		2C0BE1FC250E17B8000DEB73 /* MovieListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE1FB250E17B8000DEB73 /* MovieListController.swift */; };
 		2C0BE1FE250E17C6000DEB73 /* MovieDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE1FD250E17C6000DEB73 /* MovieDetailController.swift */; };
 		2C0BE200250E18B3000DEB73 /* MovieTypesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE1FF250E18B3000DEB73 /* MovieTypesController.swift */; };
-		2C0BE202250E18CA000DEB73 /* MovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE201250E18CA000DEB73 /* MovieAPI.swift */; };
+		2C0BE202250E18CA000DEB73 /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE201250E18CA000DEB73 /* MovieService.swift */; };
 		2C0BE205250E190B000DEB73 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE204250E190B000DEB73 /* Extensions.swift */; };
 		2C0BE209250E1C63000DEB73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C0BE207250E1C63000DEB73 /* Main.storyboard */; };
 		2C0BE20D250E369A000DEB73 /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0BE20C250E369A000DEB73 /* MovieViewModel.swift */; };
@@ -33,7 +33,7 @@
 		2C0BE1FB250E17B8000DEB73 /* MovieListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListController.swift; sourceTree = "<group>"; };
 		2C0BE1FD250E17C6000DEB73 /* MovieDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailController.swift; sourceTree = "<group>"; };
 		2C0BE1FF250E18B3000DEB73 /* MovieTypesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTypesController.swift; sourceTree = "<group>"; };
-		2C0BE201250E18CA000DEB73 /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
+		2C0BE201250E18CA000DEB73 /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
 		2C0BE204250E190B000DEB73 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		2C0BE208250E1C63000DEB73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2C0BE20C250E369A000DEB73 /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -104,7 +104,7 @@
 		2C0BE1F7250E171F000DEB73 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2C0BE201250E18CA000DEB73 /* MovieAPI.swift */,
+				2C0BE201250E18CA000DEB73 /* MovieService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -223,7 +223,7 @@
 				2C0BE200250E18B3000DEB73 /* MovieTypesController.swift in Sources */,
 				2C0BE1E2250E16CD000DEB73 /* AppDelegate.swift in Sources */,
 				2C0BE1FE250E17C6000DEB73 /* MovieDetailController.swift in Sources */,
-				2C0BE202250E18CA000DEB73 /* MovieAPI.swift in Sources */,
+				2C0BE202250E18CA000DEB73 /* MovieService.swift in Sources */,
 				2C0BE20D250E369A000DEB73 /* MovieViewModel.swift in Sources */,
 				2C0BE1FC250E17B8000DEB73 /* MovieListController.swift in Sources */,
 				2C0BE1E4250E16CD000DEB73 /* SceneDelegate.swift in Sources */,

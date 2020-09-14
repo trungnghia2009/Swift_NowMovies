@@ -51,7 +51,7 @@ class MovieListCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         addSubview(movieImageView)
-        movieImageView.centerY(inView: self, left: leftAnchor, paddingLeft: 24)
+        movieImageView.centerY(inView: self, left: self.safeAreaLayoutGuide.leftAnchor, paddingLeft: 24)
         
         let stack = UIStackView(arrangedSubviews: [titleLabel, ratingLabel])
         stack.axis = .vertical

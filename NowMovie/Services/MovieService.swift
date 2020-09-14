@@ -26,7 +26,7 @@ struct MovieResult: Decodable {
     var overview: String
 }
 
-class MovieAPI {
+class MovieService {
     
     private var resourceURL: URL?
     

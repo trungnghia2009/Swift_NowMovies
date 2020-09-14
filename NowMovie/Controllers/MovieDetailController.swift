@@ -13,6 +13,14 @@ class MovieDetailController: UIViewController {
     // MARK: - Properties
     let viewModel: MovieViewModel
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private let movieImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .secondarySystemBackground
@@ -51,16 +59,24 @@ class MovieDetailController: UIViewController {
         setupNavigationBar()
     }
     
-    
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
+        // Movie title
+        view.addSubview(titleLabel)
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor,
+                          left: view.safeAreaLayoutGuide.leftAnchor,
+                          right: view.safeAreaLayoutGuide.rightAnchor,
+                          paddingTop: 20,
+                          paddingLeft: 12,
+                          paddingRight: 12)
+        titleLabel.text = viewModel.title
         
         // Movie image
         view.addSubview(movieImageView)
         movieImageView.setDimensions(width: view.frame.size.width, height: 250)
         movieImageView.centerX(inView: view)
-        movieImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 0)
+        movieImageView.anchor(top: titleLabel.bottomAnchor, paddingTop: 20)
         if let url = URL(string: viewModel.detailImageUrl) {
             movieImageView.load(url: url)
         }
@@ -83,6 +99,6 @@ class MovieDetailController: UIViewController {
     // MARK: - Helpers
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = viewModel.title
+        navigationItem.title = "Movie Details"
     }
 }

@@ -16,9 +16,9 @@ class MovieListViewModel {
         }
     }
     
-    private var service: MovieAPI?
+    private var service: MovieService?
     
-    init(service: MovieAPI) {
+    init(service: MovieService) {
         self.service = service
     }
     
