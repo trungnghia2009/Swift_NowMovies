@@ -21,7 +21,7 @@ class MovieListCell: UITableViewCell {
     
     private let movieImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .blue
+        iv.backgroundColor = .brown
         iv.setDimensions(width: 47, height: 70)
         iv.contentMode = .scaleAspectFit
         iv.layer.cornerRadius = 5

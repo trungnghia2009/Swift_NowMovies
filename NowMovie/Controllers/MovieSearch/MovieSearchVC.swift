@@ -1,40 +1,32 @@
 //
-//  MovieListController.swift
+//  MovieSearchController.swift
 //  NowMovie
 //
-//  Created by trungnghia on 9/13/20.
+//  Created by trungnghia on 9/15/20.
 //  Copyright © 2020 trungnghia. All rights reserved.
 //
 
 import UIKit
-import ReactiveSwift
 
-class MovieListController: UITableViewController {
-    
+class MovieSearchVC: UITableViewController {
+
     // MARK: - Properties
-    let movieTypeDefault = MovieType.allCases[0]
-    var viewModel = MovieListVM(service: MovieService())
+    private let searchController = UISearchController()
+    var viewModel = MovieSearchVM(service: MovieService())
     
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
         setupTableView()
+        configureSearchController()
         setupObserver()
-        viewModel.fetchMovies(type: movieTypeDefault)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     deinit {
-        print("Clear observation")
         viewModel.clearObservation()
+        print("Clear Observation")
     }
-    
     
     // MARK: - Helpers
     private func setupObserver() {
@@ -44,12 +36,17 @@ class MovieListController: UITableViewController {
     }
     
     private func setupNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = movieTypeDefault.description
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "flame"),
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(didTapRightBarButton))
+        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.title = "Movie Search"
+    }
+    
+    private func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.placeholder = "Search..."
+        navigationItem.searchController = searchController
+        definesPresentationContext = false
     }
     
     private func setupTableView() {
@@ -60,19 +57,18 @@ class MovieListController: UITableViewController {
     }
     
     // MARK: - Selectors
-    @objc private func didTapRightBarButton() {
-        let controller = MovieTypesController()
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        present(nav, animated: true)
-    }
-
+    
 }
 
-
 // MARK: - UITableViewDataSource
-extension MovieListController {
+extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if viewModel.numberOfRowsInSection(section) == 0 {
+            tableView.setEmptyMessage(message: "There is no movies", size: 20)
+        } else {
+            tableView.restore()
+        }
+        
         return viewModel.numberOfRowsInSection(section)
     }
     
@@ -88,22 +84,25 @@ extension MovieListController {
 
 
 // MARK: - UITableViewDelegate
-extension MovieListController {
+extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = viewModel.movieAtIndex(indexPath.row)
-        let controller = MovieDetailController(viewModel: MovieDetailVM(movie: movie))
+        let controller = MovieDetailVC(viewModel: MovieDetailVM(movie: movie))
         navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-// MARK: - MovieTypesControllerDelegate
-extension MovieListController: MovieTypesControllerDelegate {
-    func didSelectMovieType(_ type: MovieType) {
-        navigationItem.title = type.description
-        viewModel.fetchMovies(type: type)
+// MARK: - UISearchResultsUpdating
+extension MovieSearchVC: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchKey = searchController.searchBar.text else { return }
+        if searchKey.count == 0 {
+            viewModel.movies.value.removeAll()
+            return
+        }
+        
+        viewModel.searchMovies(searchKey: searchKey)
     }
-    
-    
     
     
 }

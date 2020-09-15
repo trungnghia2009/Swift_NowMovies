@@ -87,6 +87,13 @@ extension UIView {
         widthAnchor.constraint(equalToConstant: width).isActive = true
         heightAnchor.constraint(equalToConstant: height).isActive = true
     }
+    
+    func addShadow() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 5, height: 5)
+        layer.shadowRadius = 4
+        layer.shadowOpacity = 0.4
+    }
 }
 
 
@@ -101,6 +108,24 @@ extension UIImageView {
                 }
             }
         }
+    }
+}
+
+extension UITableView {
+    func setEmptyMessage(message: String, size: CGFloat) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .lightGray
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont.systemFont(ofSize: size, weight: UIFont.Weight.medium)
+        messageLabel.sizeToFit()
+
+        self.backgroundView = messageLabel
+    }
+
+    func restore() {
+        self.backgroundView = nil
     }
 }
 

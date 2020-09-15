@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MovieDetailController: UIViewController {
+class MovieDetailVC: UIViewController {
     
     // MARK: - Properties
     let viewModel: MovieDetailVM
@@ -36,7 +36,7 @@ class MovieDetailController: UIViewController {
         iv.setDimensions(width: 70, height: 70)
         iv.layer.cornerRadius = 35
         iv.layer.borderColor = UIColor.systemBackground.cgColor
-        iv.layer.borderWidth = 3
+        iv.layer.borderWidth = 2
         iv.backgroundColor = .systemBackground
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit

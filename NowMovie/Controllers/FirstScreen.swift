@@ -32,7 +32,7 @@ class FirstScreen: UIViewController {
     }
     
     @objc private func didTapButton() {
-        let controller = MovieListController()
+        let controller = MovieListVC()
         navigationController?.pushViewController(controller, animated: true)
     }
 
