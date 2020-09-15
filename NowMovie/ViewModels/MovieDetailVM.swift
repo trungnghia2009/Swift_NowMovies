@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MovieViewModel {
+class MovieDetailVM {
     let movie: Movie
     
     init(movie: Movie) {

@@ -13,6 +13,7 @@ private let nowPlayingQuery = "https://api.themoviedb.org/3/movie/now_playing?ap
 private let popularQuery = "https://api.themoviedb.org/3/movie/popular?api_key=989854c6c0be60cc4b2c40eb24cddeda"
 private let topRatedQuery = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda"
 private let upcomingQuery = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+//https://api.themoviedb.org/3/movie/337401/credits?api_key=989854c6c0be60cc4b2c40eb24cddeda
 
 struct Movies: Decodable {
     var results: [MovieResult]
@@ -55,23 +56,28 @@ class MovieService: MovieServiceProtocol {
             resourceURL = URL(string: upcomingQuery)
         }
         
-        guard let resourceURL = resourceURL else {
-            print("URL for \(type.description) got error")
-            return SignalProducer(error: MovieServiceError.unknownError)
-        }
         
-        return SignalProducer { observer, _ in
+        
+        return SignalProducer { [weak self] observer, _ in
+            guard let resourceURL = self?.resourceURL else {
+                print("URL for \(type.description) got error")
+                observer.send(error: MovieServiceError.unknownError)
+                observer.sendCompleted()
+                return
+            }
+            
             URLSession.shared.dataTask(with: resourceURL) { (data, response, error) in
                         if let error = error {
                             print(error.localizedDescription)
                             observer.send(error: error)
-                            return
+                            observer.sendCompleted()
                         }
                         
                         guard let httpResponse = response as? HTTPURLResponse,
                             (200...299).contains(httpResponse.statusCode) else {
                                 print("Error with the response")
                                 observer.send(error: MovieServiceError.statusCodeError)
+                                observer.sendCompleted()
                                 return
                         }
                         
@@ -100,12 +106,12 @@ class MovieService: MovieServiceProtocol {
                                 observer.sendCompleted()
                             } catch {
                                 observer.send(error: MovieServiceError.decodingError)
-                                return
+                                observer.sendCompleted()
                             }
                             
                         } else {
                             observer.send(error: MovieServiceError.dataError)
-                            return
+                            observer.sendCompleted()
                         }
                         
                     }.resume()

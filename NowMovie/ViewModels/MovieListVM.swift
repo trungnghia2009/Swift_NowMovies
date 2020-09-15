@@ -9,14 +9,10 @@
 import Foundation
 import ReactiveSwift
 
-class MovieListViewModel {
-    var updateData: (() -> Void)?
-    var movies = [Movie]() {
-        didSet {
-            updateData?()
-        }
-    }
+class MovieListVM {
     
+    var disposes = CompositeDisposable()
+    var movies = MutableProperty<[Movie]>([])
     private var service: MovieServiceProtocol?
     
     init(service: MovieServiceProtocol) {
@@ -24,23 +20,37 @@ class MovieListViewModel {
     }
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return movies.count
+        return movies.value.count
     }
     
     func movieAtIndex(_ index: Int) -> Movie {
-        return movies[index]
+        return movies.value[index]
     }
     
     func fetchMovies(type: MovieType) {
-        service?.fetchMovies(type)
+        disposes += service?.fetchMovies(type)
         .observe(on: UIScheduler())
             .startWithResult{ [weak self] (result) in
                 switch result {
                 case .success(let movies):
-                    self?.movies = movies
+                    self?.movies.value = movies
                 case .failure(let error):
                     print(error)
                 }
-            }
+        }
+        
+        
     }
+    
+    func clearObservation() {
+        disposes.dispose()
+    }
+    
 }
+
+
+
+
+
+
+

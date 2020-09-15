@@ -13,7 +13,7 @@ class MovieListController: UITableViewController {
     
     // MARK: - Properties
     let movieTypeDefault = MovieType.allCases[0]
-    var viewModel = MovieListViewModel(service: MovieService())
+    var viewModel = MovieListVM(service: MovieService())
     
 
     // MARK: - Lifecycle
@@ -30,13 +30,16 @@ class MovieListController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
+    deinit {
+        print("Clear observation")
+        viewModel.clearObservation()
+    }
+    
     
     // MARK: - Helpers
     private func setupObserver() {
-        viewModel.updateData = { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
+        viewModel.movies.producer.startWithResult { [weak self] (_) in
+            self?.tableView.reloadData()
         }
     }
     
@@ -78,7 +81,7 @@ extension MovieListController {
         cell.accessoryType = .disclosureIndicator
         
         let movie = viewModel.movieAtIndex(indexPath.row)
-        cell.viewModel = MovieViewModel(movie: movie)
+        cell.viewModel = MovieDetailVM(movie: movie)
         return cell
     }
 }
@@ -88,7 +91,7 @@ extension MovieListController {
 extension MovieListController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let movie = viewModel.movieAtIndex(indexPath.row)
-        let controller = MovieDetailController(viewModel: MovieViewModel(movie: movie))
+        let controller = MovieDetailController(viewModel: MovieDetailVM(movie: movie))
         navigationController?.pushViewController(controller, animated: true)
     }
 }

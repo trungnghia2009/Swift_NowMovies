@@ -14,7 +14,40 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="QwZ-CH-UXy">
+                                <rect key="frame" x="0.0" y="44" width="414" height="61"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" aisdjai a sdjia jsdpija ijd aijio djai shdupa gwpygdp agwyd gpa w d ajsd jaod kao kd[o ak pokao sdkapo kw] jdh[fuah" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4L6-3u-1Xg">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="xEl-qA-T5n">
+                                <rect key="frame" x="0.0" y="125" width="414" height="61"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="faY-GM-sr1">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="61"/>
+                                        <string key="text"> haishda9 2 9 jd[9aj đ2 jaojs asjd aij dia jsd ah[iosdhai hd'ai da hpidhpais duahdihapusdhpa hs duahs[ dao isj[diajsd[ aijsd ]aopj d a d ad a d as</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="xEl-qA-T5n" firstAttribute="top" secondItem="QwZ-CH-UXy" secondAttribute="bottom" constant="20" id="6BH-rv-x8a"/>
+                            <constraint firstItem="QwZ-CH-UXy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="LdQ-8g-dGz"/>
+                            <constraint firstItem="xEl-qA-T5n" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OzM-3g-aFD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xEl-qA-T5n" secondAttribute="trailing" id="eJG-x1-wXf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QwZ-CH-UXy" secondAttribute="trailing" id="tlu-WQ-Jg9"/>
+                            <constraint firstItem="QwZ-CH-UXy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wjd-3g-44b"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
