@@ -29,7 +29,7 @@ class MovieSearchVM {
     
     func searchMovies(searchKey: String) {
         disposes += service?.searchMovies(searchKey)
-        .observe(on: UIScheduler())
+            .observe(on: UIScheduler())
             .startWithResult{ [weak self] (result) in
                 switch result {
                 case .success(let movies):
@@ -38,8 +38,6 @@ class MovieSearchVM {
                     print(error)
                 }
         }
-        
-        
     }
     
     func clearObservation() {

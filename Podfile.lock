@@ -1,16 +1,21 @@
 PODS:
+  - ReactiveCocoa (10.3.0):
+    - ReactiveSwift (~> 6.2)
   - ReactiveSwift (6.3.0)
 
 DEPENDENCIES:
+  - ReactiveCocoa (~> 10.1)
   - ReactiveSwift (~> 6.1)
 
 SPEC REPOS:
   trunk:
+    - ReactiveCocoa
     - ReactiveSwift
 
 SPEC CHECKSUMS:
+  ReactiveCocoa: 083ae559e6f588ce519cab412ea119b431c26a24
   ReactiveSwift: 7937f26ec18d555e2a99352bd0a8b2817d1f042d
 
-PODFILE CHECKSUM: 0221f541ffbab95640fbefd8fff6ecaab5b838b1
+PODFILE CHECKSUM: 6eaa4edd47ce1352d78d85632b2408887dc5b18e
 
 COCOAPODS: 1.9.3

@@ -39,6 +39,7 @@ enum MovieServiceError: Error {
 protocol MovieServiceProtocol {
     func fetchMovies(_ type: MovieType) -> SignalProducer<[Movie], Error>
     func searchMovies(_ searchKey: String) -> SignalProducer<[Movie], Error>
+    func fetchMoviesForSearching(_ searchKey: String) -> Signal<[Movie], Error>
 }
 
 class MovieService: MovieServiceProtocol {
@@ -147,6 +148,26 @@ class MovieService: MovieServiceProtocol {
             self?.handleURLSession(resourceURL, observer)
             
         }
+
+        
+    }
+    
+    func fetchMoviesForSearching(_ searchKey: String) -> Signal<[Movie], Error> {
+        
+        return Signal { [weak self] observer, _ in
+            
+            guard let resourceURL = URL(string: searchQuery + searchKey) else {
+                print("unvalid URL")
+                observer.send(error: MovieServiceError.unknownError)
+                observer.sendCompleted()
+                return
+            }
+            
+            print("\(searchQuery)" + searchKey)
+            
+            self?.handleURLSession(resourceURL, observer)
+        }
+        
         
     }
     

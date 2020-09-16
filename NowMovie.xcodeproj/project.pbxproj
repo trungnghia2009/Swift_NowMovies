@@ -99,10 +99,10 @@
 			isa = PBXGroup;
 			children = (
 				BA961E142510538500311268 /* FirstScreen.swift */,
+				2C0BE1FF250E18B3000DEB73 /* MovieTypesController.swift */,
 				2CADFA9B25110587004A831C /* MovieList */,
 				2CADFA9C25110601004A831C /* MovieDetail */,
 				2CADFA9D25110665004A831C /* MovieSearch */,
-				2C0BE1FF250E18B3000DEB73 /* MovieTypesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

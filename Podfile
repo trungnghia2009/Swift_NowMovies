@@ -7,5 +7,7 @@ target 'NowMovie' do
 
   # Pods for NowMovie
   pod 'ReactiveSwift', '~> 6.1'
+  pod 'ReactiveCocoa', '~> 10.1'
+
 
 end
