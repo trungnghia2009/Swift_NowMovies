@@ -52,8 +52,8 @@ class MovieListVC: UITableViewController {
     }
     
     deinit {
-        print("Clear observation")
         viewModel.clearObservation()
+        print("Clear observation for Movie List screen")
     }
     
     
@@ -74,6 +74,7 @@ class MovieListVC: UITableViewController {
     }
     
     private func setupTableView() {
+        tableView.accessibilityLabel = "List Movie table"
         tableView.register(MovieListCell.self, forCellReuseIdentifier: MovieListCell.reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 90

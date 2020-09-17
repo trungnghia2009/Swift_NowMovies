@@ -25,9 +25,14 @@ class MovieSearchVC: UITableViewController {
         setupObserver()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchController.isActive = true
+    }
+    
     deinit {
         viewModel.clearObservation()
-        print("Clear Observation")
+        print("Clear observation for Movie Search screen")
     }
     
     // MARK: - Helpers
@@ -43,10 +48,12 @@ class MovieSearchVC: UITableViewController {
     }
     
     private func configureSearchController() {
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search..."
+        searchController.searchBar.searchTextField.returnKeyType = .done
         navigationItem.searchController = searchController
         definesPresentationContext = false
 
@@ -95,7 +102,6 @@ extension MovieSearchVC {
     }
 }
 
-
 // MARK: - UITableViewDelegate
 extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -111,9 +117,13 @@ extension MovieSearchVC: UISearchResultsUpdating {
         guard let searchKey = searchController.searchBar.text else { return }
         if searchKey.count == 0 {
             viewModel.movies.value.removeAll()
-            return
         }
     }
-    
-    
+}
+
+// MARK: UISearchControllerDelegate
+extension MovieSearchVC: UISearchControllerDelegate {
+    func presentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
+    }
 }

@@ -51,6 +51,7 @@ class MovieTypesController: UITableViewController {
     }
     
     private func setupTableView() {
+        tableView.accessibilityLabel = "Movie Types table"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableFooterView = UIView()
     }

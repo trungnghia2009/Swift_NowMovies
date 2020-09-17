@@ -14,7 +14,6 @@ private let popularQuery = "https://api.themoviedb.org/3/movie/popular?api_key=9
 private let topRatedQuery = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda"
 private let upcomingQuery = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda"
 private let searchQuery = "https://api.themoviedb.org/3/search/movie?api_key=989854c6c0be60cc4b2c40eb24cddeda&query="
-//https://api.themoviedb.org/3/movie/337401/credits?api_key=989854c6c0be60cc4b2c40eb24cddeda
 
 struct Movies: Decodable {
     var results: [MovieResult]
@@ -30,7 +29,7 @@ struct MovieResult: Decodable {
 }
 
 enum MovieServiceError: Error {
-    case unknownError
+    case unvalidURL
     case statusCodeError
     case dataError
     case decodingError
@@ -123,7 +122,7 @@ class MovieService: MovieServiceProtocol {
         return SignalProducer { [weak self] observer, _ in
             guard let resourceURL = self?.resourceURL else {
                 print("URL for \(type.description) got error")
-                observer.send(error: MovieServiceError.unknownError)
+                observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
             }
@@ -135,18 +134,17 @@ class MovieService: MovieServiceProtocol {
     // MARK: - Search Movies
     func searchMovies(_ searchKey: String) -> SignalProducer<[Movie], Error> {
         return SignalProducer { [weak self] observer, _ in
+            print("Searching: " + searchKey)
+            let transformSearchKey = searchKey.replacingOccurrences(of: " ", with: "%20")
             
-            guard let resourceURL = URL(string: searchQuery + searchKey) else {
+            guard let resourceURL = URL(string: searchQuery + transformSearchKey) else {
                 print("unvalid URL")
-                observer.send(error: MovieServiceError.unknownError)
+                observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
             }
             
-            print("\(searchQuery)" + searchKey)
-            
             self?.handleURLSession(resourceURL, observer)
-            
         }
 
         
@@ -158,7 +156,7 @@ class MovieService: MovieServiceProtocol {
             
             guard let resourceURL = URL(string: searchQuery + searchKey) else {
                 print("unvalid URL")
-                observer.send(error: MovieServiceError.unknownError)
+                observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
             }

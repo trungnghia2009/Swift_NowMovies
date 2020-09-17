@@ -12,7 +12,7 @@ class FirstScreen: UIViewController {
 
     private let actionButon: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("To Movies List", for: .normal)
+        button.setTitle("To Movie List", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
         button.setDimensions(width: 200, height: 50)
         button.setTitleColor(.white, for: .normal)
