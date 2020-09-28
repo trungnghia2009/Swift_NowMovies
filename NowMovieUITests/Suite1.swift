@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Cucumberish
 
 /*
 
@@ -36,7 +37,7 @@ class Suite1: XCTestCase {
         app.launch()
         app.buttons["To Movie List"].tap()
         sleep(3)
-        app.navigationBars.buttons["flame"].tap()
+        app.navigationBars.buttons["Flame"].tap()
         app.tables["Movie Types table"].cells.staticTexts["Upcoming Movies"].tap()
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.

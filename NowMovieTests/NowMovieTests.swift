@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import Quick
+import Nimble
 
 class NowMovieTests: XCTestCase {
 
