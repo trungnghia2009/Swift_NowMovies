@@ -8,58 +8,12 @@
 
 import UIKit
 
-class MovieDetailVC: UIViewController {
+class MovieDetailVC: UITableViewController {
     
     // MARK: - Properties
     let viewModel: MovieDetailVM
     
-    private var scrollView: UIScrollView!
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private let movieImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .secondarySystemBackground
-        iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        return iv
-    }()
-    
-    lazy var playTrailerView: UIImageView = {
-        let iv = UIImageView()
-        iv.setDimensions(width: 70, height: 70)
-        iv.layer.cornerRadius = 35
-        iv.layer.borderColor = UIColor.systemBackground.cgColor
-        iv.layer.borderWidth = 2
-        iv.backgroundColor = .systemBackground
-        iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "play.circle.fill")
-        iv.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlayButton))
-        iv.addGestureRecognizer(tapGesture)
-        return iv
-    }()
-    
-    private let aboutLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.text = "About the Movie"
-        return label
-    }()
-    
-    private let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.numberOfLines = 0
-        return label
-    }()
+    private lazy var headerView = MovieDetailHeader(viewModel: viewModel)
     
     // MARK: - Lifecycle
     init(viewModel: MovieDetailVM) {
@@ -75,63 +29,7 @@ class MovieDetailVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupNavigationBar()
-        
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        scrollView = UIScrollView(frame: view.bounds)
-        view.addSubview(scrollView)
-        
-        let containerView = UIView(frame: scrollView.bounds)
-        scrollView.addSubview(containerView)
-        
-        // Movie title
-        containerView.addSubview(titleLabel)
-        titleLabel.anchor(top: containerView.safeAreaLayoutGuide.topAnchor,
-                          left: containerView.safeAreaLayoutGuide.leftAnchor,
-                          right: containerView.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 20,
-                          paddingLeft: 12,
-                          paddingRight: 12)
-        titleLabel.text = viewModel.title
-
-        // Movie image
-        containerView.addSubview(movieImageView)
-        movieImageView.setDimensions(width: scrollView.frame.size.width, height: 250)
-        movieImageView.centerX(inView: scrollView)
-        movieImageView.anchor(top: titleLabel.bottomAnchor, paddingTop: 20)
-        if let url = URL(string: viewModel.detailImageUrl) {
-            movieImageView.load(url: url)
-        }
-        
-        // Play trailer button
-        containerView.addSubview(playTrailerView)
-        playTrailerView.anchor(top: movieImageView.bottomAnchor,
-                                 right: containerView.safeAreaLayoutGuide.rightAnchor,
-                                 paddingTop: -35,
-                                 paddingRight: 35)
-
-        // About the movie
-        let stack = UIStackView(arrangedSubviews: [aboutLabel, descriptionLabel])
-        stack.axis = .vertical
-        stack.spacing = 5
-        stack.alignment = .leading
-        containerView.addSubview(stack)
-        stack.anchor(top: movieImageView.bottomAnchor,
-                     left: scrollView.safeAreaLayoutGuide.leftAnchor,
-                     right: scrollView.safeAreaLayoutGuide.rightAnchor,
-                     paddingTop: 20,
-                     paddingLeft: 12,
-                     paddingRight: 12)
-        
-        descriptionLabel.text = viewModel.overview
-        
-        
-        
-        scrollView.contentSize = CGSize(width: view.frame.size.width,
-                                        height: containerView.frame.size.height + 1)
+        setupTableView()
     }
     
     // MARK: - Helpers
@@ -140,8 +38,36 @@ class MovieDetailVC: UIViewController {
         navigationItem.title = "Movie Details"
     }
     
-    // MARK: Selectors
-    @objc private func didTapPlayButton() {
-        print("Do something...")
+    private func setupTableView() {
+        headerView.delegate = self
+        tableView.tableHeaderView = headerView
+        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 320)
+        tableView.register(MovieDetailCell.self, forCellReuseIdentifier: MovieDetailCell.reuseIdentifier)
+        tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .none
     }
+    
+}
+
+// MARK: UITableViewDataSource
+extension MovieDetailVC {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MovieDetailCell.reuseIdentifier, for: indexPath) as! MovieDetailCell
+        cell.viewModel = viewModel
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+// MARK: MovieDetailHeaderDelegate
+extension MovieDetailVC: MovieDetailHeaderDelegate {
+    func didTapPlayTrailerButton() {
+        print("Did Tap Play Trailer button...")
+    }
+    
+    
 }

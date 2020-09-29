@@ -31,6 +31,16 @@ class FirstScreen: UIViewController {
         actionButon.centerY(inView: view)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     @objc private func didTapButton() {
         let controller = MovieListVC()
         navigationController?.pushViewController(controller, animated: true)
