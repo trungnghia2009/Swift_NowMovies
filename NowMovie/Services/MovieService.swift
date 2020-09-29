@@ -9,11 +9,11 @@
 import Foundation
 import ReactiveSwift
 
-private let nowPlayingQuery = "https://api.themoviedb.org/3/movie/now_playing?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-private let popularQuery = "https://api.themoviedb.org/3/movie/popular?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-private let topRatedQuery = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-private let upcomingQuery = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-private let searchQuery = "https://api.themoviedb.org/3/search/movie?api_key=989854c6c0be60cc4b2c40eb24cddeda&query="
+private let nowPlayingQuery = QueryLink.shared.nowPlayingQuery
+private let popularQuery = QueryLink.shared.popularQuery
+private let topRatedQuery = QueryLink.shared.topRatedQuery
+private let upcomingQuery = QueryLink.shared.upcomingQuery
+private let searchQuery = QueryLink.shared.searchQuery
 
 struct Movies: Decodable {
     var results: [MovieResult]

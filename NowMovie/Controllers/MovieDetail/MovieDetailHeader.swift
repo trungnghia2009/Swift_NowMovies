@@ -71,7 +71,6 @@ class MovieDetailHeader: UIView {
         movieImageView.centerX(inView: self)
         movieImageView.anchor(top: titleLabel.bottomAnchor, paddingTop: 20)
         if let url = URL(string: viewModel.detailImageUrl) {
-            print(viewModel.detailImageUrl)
             movieImageView.load(url: url)
         }
         
