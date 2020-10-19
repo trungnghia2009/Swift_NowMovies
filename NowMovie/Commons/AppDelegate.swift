@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         try! FileManager.default.removeItem(atPath: NSHomeDirectory()+"/Library/SplashBoard")
         
         do {
-            sleep(2)
+            sleep(1)
         }
         
         return true

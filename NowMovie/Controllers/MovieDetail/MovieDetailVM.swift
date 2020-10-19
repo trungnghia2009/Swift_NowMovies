@@ -9,7 +9,7 @@
 import Foundation
 
 class MovieDetailVM {
-    let movie: Movie
+    private var movie: Movie
     
     init(movie: Movie) {
         self.movie = movie

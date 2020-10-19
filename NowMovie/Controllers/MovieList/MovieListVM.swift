@@ -11,8 +11,8 @@ import ReactiveSwift
 
 class MovieListVM {
     
-    var disposes = CompositeDisposable()
-    var movies = MutableProperty<[Movie]>([])
+    private var disposes = CompositeDisposable()
+    private(set) var movies = MutableProperty<[Movie]>([])
     private var service: MovieServiceProtocol?
     
     init(service: MovieServiceProtocol) {
