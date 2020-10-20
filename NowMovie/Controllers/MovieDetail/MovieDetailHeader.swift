@@ -54,6 +54,7 @@ class MovieDetailHeader: UIView {
     init(viewModel: MovieDetailVM) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        backgroundColor = .systemBackground
         
         // Movie title
         addSubview(titleLabel)

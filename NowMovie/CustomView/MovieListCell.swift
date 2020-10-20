@@ -13,7 +13,7 @@ class MovieListCell: UITableViewCell {
     // MARK: - Properties
     static let reuseIdentifier = String(describing: MovieListCell.self)
     
-    var viewModel: MovieDetailVM? {
+    var viewModel: MovieVM? {
         didSet {
             setup()
         }

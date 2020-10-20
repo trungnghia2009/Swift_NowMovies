@@ -38,14 +38,27 @@ class MovieListVM {
                     print(error)
                 }
         }
-        
-        
     }
     
     func clearObservation() {
         disposes.dispose()
     }
+}
+
+struct MovieVM {
+    private(set) var movie: Movie
     
+    var title: String {
+        return movie.title
+    }
+    
+    var rating: String {
+        return "Rating: \(movie.rating)"
+    }
+    
+    var coverImageURL: String {
+        return movie.coverImageURL
+    }
 }
 
 

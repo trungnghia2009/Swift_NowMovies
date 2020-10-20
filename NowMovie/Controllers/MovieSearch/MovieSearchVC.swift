@@ -14,7 +14,8 @@ class MovieSearchVC: UITableViewController {
 
     // MARK: - Properties
     private let searchController = UISearchController()
-    var viewModel = MovieSearchVM(service: MovieService())
+    private let viewModel = MovieSearchVM(service: MovieService())
+    private let networkHandling = NetworkHandling()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -25,9 +26,19 @@ class MovieSearchVC: UITableViewController {
         setupObserver()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        networkHandling.observerInternetConnection(controller: self)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchController.isActive = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkHandling.removeObserverInternetConnection()
     }
     
     deinit {
@@ -97,7 +108,7 @@ extension MovieSearchVC {
         cell.accessoryType = .disclosureIndicator
         
         let movie = viewModel.movieAtIndex(indexPath.row)
-        cell.viewModel = MovieDetailVM(movie: movie)
+        cell.viewModel = MovieVM(movie: movie)
         return cell
     }
 }
@@ -105,8 +116,8 @@ extension MovieSearchVC {
 // MARK: - UITableViewDelegate
 extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie = viewModel.movieAtIndex(indexPath.row)
-        let controller = MovieDetailVC(viewModel: MovieDetailVM(movie: movie))
+        let id = viewModel.movieAtIndex(indexPath.row).id
+        let controller = MovieDetailVC(id: id)
         navigationController?.pushViewController(controller, animated: true)
     }
 }

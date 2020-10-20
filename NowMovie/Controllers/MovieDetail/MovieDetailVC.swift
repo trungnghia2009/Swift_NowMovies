@@ -11,13 +11,13 @@ import UIKit
 class MovieDetailVC: UITableViewController {
     
     // MARK: - Properties
-    let viewModel: MovieDetailVM
+    private let viewModel = MovieDetailVM(service: MovieService())
     
-    private lazy var headerView = MovieDetailHeader(viewModel: viewModel)
+    private let id: Int
     
     // MARK: - Lifecycle
-    init(viewModel: MovieDetailVM) {
-        self.viewModel = viewModel
+    init(id: Int) {
+        self.id = id
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,6 +30,13 @@ class MovieDetailVC: UITableViewController {
         view.backgroundColor = .systemBackground
         setupNavigationBar()
         setupTableView()
+        setupObserver()
+        viewModel.fetchMovieDetail(id: id)
+    }
+    
+    deinit {
+        viewModel.clearObservation()
+        print("Clear observation for Movie List screen")
     }
     
     // MARK: - Helpers
@@ -39,12 +46,16 @@ class MovieDetailVC: UITableViewController {
     }
     
     private func setupTableView() {
-        headerView.delegate = self
-        tableView.tableHeaderView = headerView
-        headerView.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 320)
         tableView.register(MovieDetailCell.self, forCellReuseIdentifier: MovieDetailCell.reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
+    }
+    
+    private func setupObserver() {
+        viewModel.movieDetail.producer.startWithResult { [weak self] (_) in
+            self?.tableView.reloadData()
+            print("Got API...")
+        }
     }
     
 }
@@ -61,6 +72,17 @@ extension MovieDetailVC {
         cell.selectionStyle = .none
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = MovieDetailHeader(viewModel: viewModel)
+        headerView.delegate = self
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 320
+    }
+    
 }
 
 // MARK: MovieDetailHeaderDelegate

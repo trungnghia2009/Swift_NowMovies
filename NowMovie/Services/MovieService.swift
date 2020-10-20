@@ -15,6 +15,7 @@ private let topRatedQuery = QueryLink.shared.topRatedQuery
 private let upcomingQuery = QueryLink.shared.upcomingQuery
 private let searchQuery = QueryLink.shared.searchQuery
 
+// MARK: For Movies
 struct Movies: Decodable {
     var results: [MovieResult]
 }
@@ -28,6 +29,9 @@ struct MovieResult: Decodable {
     var overview: String
 }
 
+// MARK: For Movie Detail
+
+
 enum MovieServiceError: Error {
     case unvalidURL
     case statusCodeError
@@ -38,7 +42,7 @@ enum MovieServiceError: Error {
 protocol MovieServiceProtocol {
     func fetchMovies(_ type: MovieType) -> SignalProducer<[Movie], Error>
     func searchMovies(_ searchKey: String) -> SignalProducer<[Movie], Error>
-    func fetchMoviesForSearching(_ searchKey: String) -> Signal<[Movie], Error>
+    func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error>
 }
 
 class MovieService: MovieServiceProtocol {
@@ -71,7 +75,7 @@ class MovieService: MovieServiceProtocol {
                     
                     jsonData.results.forEach { (movieResult) in
                         var coverImageURL = "https://image.tmdb.org/t/p/w200"
-                        var detailImageURL = "https://image.tmdb.org/t/p/w500"
+                        var detailImageURL = "https://image.tmdb.org/t/p/original"
                         
                         if let posterPath = movieResult.posterPath {
                             coverImageURL += posterPath
@@ -146,26 +150,57 @@ class MovieService: MovieServiceProtocol {
             
             self?.handleURLSession(resourceURL, observer)
         }
-
-        
     }
     
-    func fetchMoviesForSearching(_ searchKey: String) -> Signal<[Movie], Error> {
+    // MARK: Fetch movie detail
+    func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error> {
+        print("\(QueryLink.shared.movieDetailQuery(id: id))")
         
-        return Signal { [weak self] observer, _ in
-            
-            guard let resourceURL = URL(string: searchQuery + searchKey) else {
-                print("unvalid URL")
+        return SignalProducer { observer, _ in
+            guard let resourceURL = URL(string: QueryLink.shared.movieDetailQuery(id: id)) else {
+                print("unvalid URL for movie detail")
                 observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
             }
             
-            print("\(searchQuery)" + searchKey)
+            URLSession.shared.dataTask(with: resourceURL) { (data, response, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                    observer.send(error: error)
+                    observer.sendCompleted()
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse,
+                    (200...299).contains(httpResponse.statusCode) else {
+                        print("Error with the response")
+                        observer.send(error: MovieServiceError.statusCodeError)
+                        observer.sendCompleted()
+                        return
+                }
+                
+                // Handle data
+                if let data = data {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    
+                    do {
+                        let movieDetail = try decoder.decode(MovieDetail.self, from: data)
+                        observer.send(value: movieDetail)
+                        observer.sendCompleted()
+                    } catch let error{
+                        observer.send(error: error)
+                        observer.sendCompleted()
+                    }
+                    
+                } else {
+                    observer.send(error: MovieServiceError.dataError)
+                    observer.sendCompleted()
+                }
+                
+            }.resume()
             
-            self?.handleURLSession(resourceURL, observer)
         }
-        
         
     }
     

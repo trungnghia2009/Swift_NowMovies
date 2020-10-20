@@ -1,7 +1,85 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8Hg-sm-s5P">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Internet Connect Error Handling-->
+        <scene sceneID="cQU-jD-syD">
+            <objects>
+                <viewController storyboardIdentifier="internet" id="8Hg-sm-s5P" customClass="InternetConnectErrorHandling" customModule="NowMovie" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Byj-k7-dSa">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There is no internet connection" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVq-Zl-AJS">
+                                <rect key="frame" x="71.5" y="144" width="271" height="26"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="19"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wifi.slash" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="pI8-R9-nq3">
+                                <rect key="frame" x="82" y="189" width="250" height="249"/>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="2hg-eF-mOQ"/>
+                                    <constraint firstAttribute="height" constant="250" id="a6l-Zc-6MG"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCx-HU-SYw">
+                                <rect key="frame" x="186.5" y="440" width="41" height="36"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <state key="normal" title="Retry"/>
+                                <connections>
+                                    <action selector="didTapRetryButton:" destination="8Hg-sm-s5P" eventType="touchUpInside" id="VQS-Uq-8Op"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-cb-Jb5">
+                                <rect key="frame" x="137" y="64" width="140" height="10"/>
+                                <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="7Uz-KE-06J"/>
+                                    <constraint firstAttribute="height" constant="10" id="y7d-QE-0s9"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VxU-1e-rh4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JVq-Zl-AJS" firstAttribute="centerX" secondItem="Byj-k7-dSa" secondAttribute="centerX" id="CO8-yr-Fpu"/>
+                            <constraint firstItem="Dnf-cb-Jb5" firstAttribute="top" secondItem="VxU-1e-rh4" secondAttribute="top" constant="20" id="HMB-Ph-eTW"/>
+                            <constraint firstItem="JVq-Zl-AJS" firstAttribute="top" secondItem="VxU-1e-rh4" secondAttribute="top" constant="100" id="Ix5-gS-PTj"/>
+                            <constraint firstItem="pI8-R9-nq3" firstAttribute="centerX" secondItem="Byj-k7-dSa" secondAttribute="centerX" id="hH8-wZ-eW5"/>
+                            <constraint firstItem="fCx-HU-SYw" firstAttribute="top" secondItem="pI8-R9-nq3" secondAttribute="bottom" id="nOI-xQ-Mvy"/>
+                            <constraint firstItem="Dnf-cb-Jb5" firstAttribute="centerX" secondItem="Byj-k7-dSa" secondAttribute="centerX" id="oMx-JD-arS"/>
+                            <constraint firstItem="pI8-R9-nq3" firstAttribute="top" secondItem="JVq-Zl-AJS" secondAttribute="bottom" constant="20" id="rfu-H8-tPE"/>
+                            <constraint firstItem="fCx-HU-SYw" firstAttribute="centerX" secondItem="Byj-k7-dSa" secondAttribute="centerX" id="sQS-FX-DYk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="lineView" destination="Dnf-cb-Jb5" id="y3O-YX-pe5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uvp-Od-jSS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-455.07246376811599" y="16.741071428571427"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="wifi.slash" catalog="system" width="128" height="108"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

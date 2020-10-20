@@ -12,8 +12,9 @@ import ReactiveSwift
 class MovieListVC: UITableViewController {
     
     // MARK: - Properties
-    let movieTypeDefault = MovieType.allCases[0]
-    var viewModel = MovieListVM(service: MovieService())
+    private let movieTypeDefault = MovieType.allCases[0]
+    private let viewModel = MovieListVM(service: MovieService())
+    private let networkHandling = NetworkHandling()
     
     private let searchButton: UIButton = {
         let button = UIButton(type: .system)
@@ -39,6 +40,12 @@ class MovieListVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
+        networkHandling.observerInternetConnection(controller: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        networkHandling.removeObserverInternetConnection()
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,6 +68,7 @@ class MovieListVC: UITableViewController {
     private func setupObserver() {
         viewModel.movies.producer.startWithResult { [weak self] (_) in
             self?.tableView.reloadData()
+            print("Get API")
         }
     }
     
@@ -83,7 +91,7 @@ class MovieListVC: UITableViewController {
     
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
-        let controller = MovieTypesController()
+        let controller = MovieTypesVC()
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
@@ -108,7 +116,7 @@ extension MovieListVC {
         cell.accessoryType = .disclosureIndicator
         
         let movie = viewModel.movieAtIndex(indexPath.row)
-        cell.viewModel = MovieDetailVM(movie: movie)
+        cell.viewModel = MovieVM(movie: movie)
         return cell
     }
 }
@@ -117,8 +125,8 @@ extension MovieListVC {
 // MARK: - UITableViewDelegate
 extension MovieListVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie = viewModel.movieAtIndex(indexPath.row)
-        let controller = MovieDetailVC(viewModel: MovieDetailVM(movie: movie))
+        let id = viewModel.movieAtIndex(indexPath.row).id
+        let controller = MovieDetailVC(id: id)
         navigationController?.pushViewController(controller, animated: true)
     }
 }

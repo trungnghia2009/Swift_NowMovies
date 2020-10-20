@@ -13,7 +13,7 @@ class MovieSearchVM {
     
     private var disposes = CompositeDisposable()
     private(set) var movies = MutableProperty<[Movie]>([])
-    private var service: MovieServiceProtocol?
+    private let service: MovieServiceProtocol?
     
     init(service: MovieServiceProtocol) {
         self.service = service

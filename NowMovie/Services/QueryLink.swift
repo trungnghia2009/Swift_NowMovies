@@ -17,4 +17,8 @@ struct QueryLink {
     let topRatedQuery = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda"
     let upcomingQuery = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda"
     let searchQuery = "https://api.themoviedb.org/3/search/movie?api_key=989854c6c0be60cc4b2c40eb24cddeda&query="
+    
+    func movieDetailQuery(id: Int) -> String {
+        return "https://api.themoviedb.org/3/movie/\(id)?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    }
 }
