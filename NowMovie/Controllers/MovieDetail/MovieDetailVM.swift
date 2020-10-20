@@ -45,10 +45,17 @@ class MovieDetailVM {
         return movieDetail.value?.title ?? "no title"
     }
     
+    var year: String {
+        return movieDetail.value?.releaseDate ?? "unknown"
+    }
+    
+    var titleAndYear: String {
+        return "\(title) (\(year.components(separatedBy: "-")[0]))"
+    }
+    
     var rating: String {
         return "Rating: \(movieDetail.value?.voteAverage ?? 0.0)"
     }
-    
     
     var detailImageUrl: String {
         return "https://image.tmdb.org/t/p/original\(movieDetail.value?.backdropPath ?? "")"

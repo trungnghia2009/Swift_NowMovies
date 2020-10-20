@@ -80,7 +80,7 @@ extension MovieDetailVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 320
+        return 300
     }
     
 }

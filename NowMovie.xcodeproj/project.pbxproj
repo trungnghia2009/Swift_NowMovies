@@ -224,8 +224,8 @@
 		2CADFA9B25110587004A831C /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
-				2C0BE212250E63E8000DEB73 /* MovieListVM.swift */,
 				2C0BE1FB250E17B8000DEB73 /* MovieListVC.swift */,
+				2C0BE212250E63E8000DEB73 /* MovieListVM.swift */,
 			);
 			path = MovieList;
 			sourceTree = "<group>";
@@ -233,8 +233,8 @@
 		2CADFA9C25110601004A831C /* MovieDetail */ = {
 			isa = PBXGroup;
 			children = (
-				2C0BE20C250E369A000DEB73 /* MovieDetailVM.swift */,
 				2C0BE1FD250E17C6000DEB73 /* MovieDetailVC.swift */,
+				2C0BE20C250E369A000DEB73 /* MovieDetailVM.swift */,
 				BA84F5C32522C157004BDC7F /* MovieDetailHeader.swift */,
 				BA84F5C82522CD4A004BDC7F /* MovieDetailCell.swift */,
 			);
@@ -244,8 +244,8 @@
 		2CADFA9D25110665004A831C /* MovieSearch */ = {
 			isa = PBXGroup;
 			children = (
-				2CADFA9E251106A8004A831C /* MovieSearchVM.swift */,
 				2CADFA9925110569004A831C /* MovieSearchVC.swift */,
+				2CADFA9E251106A8004A831C /* MovieSearchVM.swift */,
 			);
 			path = MovieSearch;
 			sourceTree = "<group>";

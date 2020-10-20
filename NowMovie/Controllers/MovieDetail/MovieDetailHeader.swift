@@ -20,18 +20,29 @@ class MovieDetailHeader: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private let movieImageView: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = .secondarySystemBackground
+        iv.backgroundColor = .systemBackground
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         return iv
+    }()
+    
+    private let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.textColor = .label
+        label.layer.backgroundColor = UIColor.secondarySystemBackground.cgColor
+        label.layer.cornerRadius = 10
+        label.setDimensions(width: 90, height: 30)
+        return label
     }()
     
     lazy var playTrailerView: UIImageView = {
@@ -55,32 +66,40 @@ class MovieDetailHeader: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         backgroundColor = .systemBackground
-        
-        // Movie title
-        addSubview(titleLabel)
-        titleLabel.anchor(top: self.safeAreaLayoutGuide.topAnchor,
-                          left: self.safeAreaLayoutGuide.leftAnchor,
-                          right: self.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 20,
-                          paddingLeft: 12,
-                          paddingRight: 12)
-        titleLabel.text = viewModel.title
 
         // Movie image
         addSubview(movieImageView)
         movieImageView.setDimensions(width: UIScreen.main.bounds.width, height: 250)
         movieImageView.centerX(inView: self)
-        movieImageView.anchor(top: titleLabel.bottomAnchor, paddingTop: 20)
+        movieImageView.anchor(top: self.safeAreaLayoutGuide.topAnchor, paddingTop: 0)
         if let url = URL(string: viewModel.detailImageUrl) {
             movieImageView.load(url: url)
         }
+        
+        // Movie rating
+        addSubview(ratingLabel)
+        ratingLabel.anchor(left: self.safeAreaLayoutGuide.leftAnchor,
+                           bottom: movieImageView.bottomAnchor,
+                           paddingLeft: 12,
+                           paddingBottom: 20)
+        ratingLabel.text = viewModel.rating
+        
+        // Movie title
+        addSubview(titleLabel)
+        titleLabel.anchor(top: movieImageView.bottomAnchor,
+                          left: self.safeAreaLayoutGuide.leftAnchor,
+                          right: self.safeAreaLayoutGuide.rightAnchor,
+                          paddingTop: 0,
+                          paddingLeft: 12,
+                          paddingRight: 60)
+        titleLabel.text = viewModel.titleAndYear
         
         // Play trailer button
         addSubview(playTrailerView)
         playTrailerView.anchor(top: movieImageView.bottomAnchor,
                                  right: self.safeAreaLayoutGuide.rightAnchor,
                                  paddingTop: -35,
-                                 paddingRight: 35)
+                                 paddingRight: 18)
     }
     
     required init?(coder: NSCoder) {
