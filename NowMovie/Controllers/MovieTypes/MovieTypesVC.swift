@@ -30,7 +30,7 @@ protocol MovieTypesControllerDelegate: class {
     func didSelectMovieType(_ type: MovieType)
 }
 
-class MovieTypesController: UITableViewController {
+class MovieTypesVC: UITableViewController {
     
     // MARK: - Properties
     weak var delegate: MovieTypesControllerDelegate?
@@ -45,7 +45,7 @@ class MovieTypesController: UITableViewController {
     // MARK: - Helpers
     private func setupNavigationBar() {
         navigationItem.title = "Movie Type Selection"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                             target: self,
                                                             action: #selector(handleDismissal))
     }
@@ -64,7 +64,7 @@ class MovieTypesController: UITableViewController {
 
 
 // MARK: - UITableViewDataSource
-extension MovieTypesController {
+extension MovieTypesVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MovieType.allCases.count
     }
@@ -78,7 +78,7 @@ extension MovieTypesController {
 }
 
 // MARK: - UITableViewDelegate
-extension MovieTypesController {
+extension MovieTypesVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let type = MovieType.allCases[indexPath.row]
         dismiss(animated: true) {
