@@ -29,8 +29,11 @@ struct MovieResult: Decodable {
     var overview: String
 }
 
-// MARK: For Movie Detail
-
+enum MoviePropertyType {
+    case detail
+    case cast
+    case image
+}
 
 enum MovieServiceError: Error {
     case unvalidURL
@@ -201,6 +204,11 @@ class MovieService: MovieServiceProtocol {
             }.resume()
             
         }
+        
+    }
+    
+    // MARK: Fetch Movie Cast
+    func fetchMovieProperty(id: Int, type: MoviePropertyType) {
         
     }
     

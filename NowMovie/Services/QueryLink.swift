@@ -21,4 +21,20 @@ struct QueryLink {
     func movieDetailQuery(id: Int) -> String {
         return "https://api.themoviedb.org/3/movie/\(id)?api_key=989854c6c0be60cc4b2c40eb24cddeda"
     }
+    
+    func movieCastQuery(id: Int) -> String {
+        return "https://api.themoviedb.org/3/movie/\(id)/credits?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    }
+    
+    func movieVideoQuery(id: Int) -> String {
+        return "https://api.themoviedb.org/3/movie/\(id)/videos?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    }
+    
+    func movieSimilarQuery(id: Int) -> String {
+        return "https://api.themoviedb.org/3/movie/\(id)/similar?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    }
+    
+    func movieRecommendationsQuery(id: Int) -> String {
+        return "https://api.themoviedb.org/3/movie/\(id)/recommendations?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    }
 }

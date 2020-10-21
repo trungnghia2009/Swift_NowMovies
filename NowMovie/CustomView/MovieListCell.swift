@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieListCell: UITableViewCell {
 
@@ -72,7 +73,7 @@ class MovieListCell: UITableViewCell {
         titleLabel.text = viewModel.title
         ratingLabel.text = viewModel.rating
         if let url = URL(string: viewModel.coverImageURL) {
-            movieImageView.load(url: url)
+            movieImageView.sd_setImage(with: url)
         }
     }
 }

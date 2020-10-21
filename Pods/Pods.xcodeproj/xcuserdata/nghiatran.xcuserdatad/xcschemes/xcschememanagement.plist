@@ -4,56 +4,55 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Cucumberish-GherkinLanguages.xcscheme_^#shared#^_</key>
+		<key>Cucumberish-GherkinLanguages.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Cucumberish.xcscheme_^#shared#^_</key>
+		<key>Cucumberish.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Nimble.xcscheme_^#shared#^_</key>
+		<key>Nimble.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods-NowMovie-NowMovieTests.xcscheme_^#shared#^_</key>
+		<key>Pods-NowMovie-NowMovieTests.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>9</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
-		<key>Pods-NowMovie-NowMovieUITests.xcscheme_^#shared#^_</key>
+		<key>Pods-NowMovie-NowMovieUITests.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-NowMovie.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>0</integer>
 		</dict>
-		<key>Quick.xcscheme_^#shared#^_</key>
+		<key>Quick.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>ReactiveCocoa.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>ReactiveSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>

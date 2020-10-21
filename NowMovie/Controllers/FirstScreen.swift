@@ -29,7 +29,8 @@ class FirstScreen: UIViewController {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+
+        setupGradientLayer(fromColor: .white, toColor: .red)
         
         view.addSubview(actionButon)
         actionButon.centerX(inView: view)

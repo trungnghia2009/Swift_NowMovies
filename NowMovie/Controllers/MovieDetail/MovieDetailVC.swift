@@ -18,7 +18,7 @@ class MovieDetailVC: UITableViewController {
     // MARK: - Lifecycle
     init(id: Int) {
         self.id = id
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .grouped)  // .group to scroll cell + header
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +80,13 @@ extension MovieDetailVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 300
+        switch UIScreen.main.traitCollection.userInterfaceIdiom {
+        case .pad:
+            // Handle for iPad
+            return 280 + 200
+        default:
+            return 280
+        }
     }
     
 }

@@ -8,6 +8,7 @@ target 'NowMovie' do
   # Pods for NowMovie
   pod 'ReactiveSwift', '~> 6.1'
   pod 'ReactiveCocoa', '~> 10.1'
+  pod 'SDWebImage', '~> 5.0'
   
   target 'NowMovieTests' do
     pod 'Quick'

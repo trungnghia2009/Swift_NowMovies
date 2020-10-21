@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol MovieDetailHeaderDelegate: class {
     func didTapPlayTrailerButton()
@@ -22,7 +23,8 @@ class MovieDetailHeader: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.textColor = .white
+        label.numberOfLines = 2
         return label
     }()
     
@@ -61,6 +63,17 @@ class MovieDetailHeader: UIView {
         return iv
     }()
     
+    lazy var albumView: UIImageView = {
+        let iv = UIImageView()
+        iv.setDimensions(width: 40, height: 40)
+        iv.contentMode = .scaleAspectFit
+        iv.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
+        iv.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlayButton))
+        iv.addGestureRecognizer(tapGesture)
+        return iv
+    }()
+    
     // MARK: Lifecycle
     init(viewModel: MovieDetailVM) {
         self.viewModel = viewModel
@@ -68,20 +81,26 @@ class MovieDetailHeader: UIView {
         backgroundColor = .systemBackground
 
         // Movie image
+        var heightPlus: CGFloat = 0
+        if UIScreen.main.traitCollection.userInterfaceIdiom == .pad {
+            heightPlus += 200
+        }
         addSubview(movieImageView)
-        movieImageView.setDimensions(width: UIScreen.main.bounds.width, height: 250)
+        movieImageView.setDimensions(width: UIScreen.main.bounds.width, height: 240 + heightPlus)
         movieImageView.centerX(inView: self)
         movieImageView.anchor(top: self.safeAreaLayoutGuide.topAnchor, paddingTop: 0)
         if let url = URL(string: viewModel.detailImageUrl) {
-            movieImageView.load(url: url)
+            movieImageView.sd_setImage(with: url)
         }
+        let frameSize = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 350 + heightPlus)
+        movieImageView.addGradient(frame: frameSize, start: .clear, end: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1))
         
         // Movie rating
         addSubview(ratingLabel)
         ratingLabel.anchor(left: self.safeAreaLayoutGuide.leftAnchor,
                            bottom: movieImageView.bottomAnchor,
                            paddingLeft: 12,
-                           paddingBottom: 20)
+                           paddingBottom: -35)
         ratingLabel.text = viewModel.rating
         
         // Movie title
@@ -89,7 +108,7 @@ class MovieDetailHeader: UIView {
         titleLabel.anchor(top: movieImageView.bottomAnchor,
                           left: self.safeAreaLayoutGuide.leftAnchor,
                           right: self.safeAreaLayoutGuide.rightAnchor,
-                          paddingTop: 0,
+                          paddingTop: -50,
                           paddingLeft: 12,
                           paddingRight: 60)
         titleLabel.text = viewModel.titleAndYear
@@ -100,6 +119,10 @@ class MovieDetailHeader: UIView {
                                  right: self.safeAreaLayoutGuide.rightAnchor,
                                  paddingTop: -35,
                                  paddingRight: 18)
+        
+        // Album button
+        addSubview(albumView)
+        albumView.anchor(left: titleLabel.leftAnchor, bottom: titleLabel.topAnchor, paddingBottom: 10)
     }
     
     required init?(coder: NSCoder) {

@@ -94,6 +94,16 @@ extension UIView {
         layer.shadowRadius = 4
         layer.shadowOpacity = 0.4
     }
+
+    func addGradient(frame: CGRect, start: UIColor, end: UIColor) {
+        let gradientView = UIView(frame: self.frame)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = frame
+        gradientLayer.colors = [start.cgColor, end.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientView.layer.insertSublayer(gradientLayer, at: 0)
+        addSubview(gradientView)
+    }
 }
 
 
@@ -126,6 +136,16 @@ extension UITableView {
 
     func restore() {
         self.backgroundView = nil
+    }
+}
+
+extension UIViewController {
+    func setupGradientLayer(fromColor start: UIColor, toColor end: UIColor) {
+        let gradient =  CAGradientLayer()
+        gradient.colors = [start.cgColor, end.cgColor]
+        gradient.locations = [0, 1]
+        view.layer.addSublayer(gradient)
+        gradient.frame = view.frame
     }
 }
 
