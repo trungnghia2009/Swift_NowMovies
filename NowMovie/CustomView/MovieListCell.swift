@@ -58,7 +58,7 @@ class MovieListCell: UITableViewCell {
         
         addSubview(stack)
         stack.centerY(inView: movieImageView, left: movieImageView.rightAnchor, paddingLeft: 12)
-        stack.anchor(right: self.rightAnchor, paddingRight: 12)
+        stack.anchor(right: self.rightAnchor, paddingRight: 24)
     }
     
     required init?(coder: NSCoder) {

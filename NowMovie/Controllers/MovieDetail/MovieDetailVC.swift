@@ -67,7 +67,9 @@ extension MovieDetailVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieDetailCell.reuseIdentifier, for: indexPath) as! MovieDetailCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieDetailCell.reuseIdentifier, for: indexPath) as? MovieDetailCell else {
+            return UITableViewCell()
+        }
         cell.viewModel = viewModel
         cell.selectionStyle = .none
         return cell

@@ -112,7 +112,9 @@ extension MovieListVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as! MovieListCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieListCell.reuseIdentifier, for: indexPath) as? MovieListCell else {
+            return UITableViewCell()
+        }
         cell.accessoryType = .disclosureIndicator
         
         let movie = viewModel.movieAtIndex(indexPath.row)
