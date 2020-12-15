@@ -145,7 +145,7 @@ extension UIViewController {
         gradient.colors = [start.cgColor, end.cgColor]
         gradient.locations = [0, 1]
         view.layer.addSublayer(gradient)
-        gradient.frame = view.frame
+        gradient.frame = view.bounds
     }
 }
 

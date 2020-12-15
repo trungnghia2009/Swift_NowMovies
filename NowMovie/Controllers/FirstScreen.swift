@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Lottie
 
 class FirstScreen: UIViewController {
     
     // MARK: Properties
     private let reachability = try! Reachability()
     private let networkHandling = NetworkHandling()
+    private let heartAnimationView = AnimationView(animation: Animation.named("love"))
+    private let movieAnimationView = AnimationView(animation: Animation.named("movie"))
     
     private let actionButon: UIButton = {
         let button = UIButton(type: .system)
@@ -40,13 +43,35 @@ class FirstScreen: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        createWatermelonAnimation()
+        createSantaAnimation()
         networkHandling.observerInternetConnection(controller: self)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        heartAnimationView.stop()
+        movieAnimationView.stop()
         networkHandling.removeObserverInternetConnection()
+    }
+    
+    private func createWatermelonAnimation() {
+        heartAnimationView.animationSpeed = 2
+        heartAnimationView.loopMode = .loop
+        heartAnimationView.contentMode = .scaleAspectFit
+        heartAnimationView.frame = CGRect(x: (view.frame.size.width - 200) / 2, y: 50, width: 200, height: 200)
+        view.addSubview(heartAnimationView)
+        heartAnimationView.play()
+    }
+    
+    private func createSantaAnimation() {
+        movieAnimationView.animationSpeed = 1
+        movieAnimationView.loopMode = .loop
+        movieAnimationView.contentMode = .scaleAspectFit
+        movieAnimationView.frame = CGRect(x: (view.frame.size.width - 200) / 2, y: view.frame.size.height - 250, width: 200, height: 200)
+        view.addSubview(movieAnimationView)
+        movieAnimationView.play()
     }
     
     // MARK: Selectors

@@ -9,8 +9,9 @@ target 'NowMovie' do
   pod 'ReactiveSwift', '~> 6.1'
   pod 'ReactiveCocoa', '~> 10.1'
   pod 'SDWebImage', '~> 5.0'
+  pod 'lottie-ios'
   
-  target 'NowMovieTests' do
+  target 'NowMovieUnitTests' do
     pod 'Quick'
     pod 'Nimble'
   end

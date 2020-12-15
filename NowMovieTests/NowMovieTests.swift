@@ -2,13 +2,11 @@
 //  NowMovieTests.swift
 //  NowMovieTests
 //
-//  Created by NghiaTran on 9/17/20.
+//  Created by NghiaTran on 15/12/2020.
 //  Copyright © 2020 trungnghia. All rights reserved.
 //
 
 import XCTest
-import Quick
-import Nimble
 
 class NowMovieTests: XCTestCase {
 

@@ -91,7 +91,7 @@ class MovieListVC: UITableViewController {
     
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
-        let controller = MovieTypesVC()
+        let controller = MovieTypeVC()
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
