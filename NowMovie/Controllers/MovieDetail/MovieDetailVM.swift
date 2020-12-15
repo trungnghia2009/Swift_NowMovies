@@ -42,7 +42,7 @@ class MovieDetailVM {
     }
     
     var title: String {
-        return movieDetail.value?.title ?? "no title"
+        return movieDetail.value?.title ?? "No title"
     }
     
     var year: String {

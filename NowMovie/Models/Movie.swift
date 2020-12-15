@@ -12,7 +12,5 @@ struct Movie {
     let id: Int
     let title: String
     let rating: Double
-    let overview: String
     let coverImageURL: String
-    let detailImageURL: String
 }

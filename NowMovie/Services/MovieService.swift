@@ -9,11 +9,13 @@
 import Foundation
 import ReactiveSwift
 
-private let nowPlayingQuery = QueryLink.shared.nowPlayingQuery
-private let popularQuery = QueryLink.shared.popularQuery
-private let topRatedQuery = QueryLink.shared.topRatedQuery
-private let upcomingQuery = QueryLink.shared.upcomingQuery
-private let searchQuery = QueryLink.shared.searchQuery
+private let nowPlayingQuery = QueryLink.shared.nowPlaying
+private let popularQuery = QueryLink.shared.popular
+private let topRatedQuery = QueryLink.shared.topRated
+private let upcomingQuery = QueryLink.shared.upcoming
+private let searchQuery = QueryLink.shared.search
+private var coverImageHeaderQuery = QueryLink.shared.coverImageHeader
+private var detailImageHeaderQuery = QueryLink.shared.detailImageHeader
 
 // MARK: For Movies
 struct Movies: Decodable {
@@ -77,30 +79,24 @@ class MovieService: MovieServiceProtocol {
                     let jsonData = try decoder.decode(Movies.self, from: data)
                     
                     jsonData.results.forEach { (movieResult) in
-                        var coverImageURL = "https://image.tmdb.org/t/p/w200"
-                        var detailImageURL = "https://image.tmdb.org/t/p/original"
+                        var coverImageURL: String?
                         
                         if let posterPath = movieResult.posterPath {
-                            coverImageURL += posterPath
+                            coverImageURL = coverImageHeaderQuery + posterPath
                         }
                         
-                        if let backdropPath = movieResult.backdropPath {
-                            detailImageURL += backdropPath
-                        }
                         
                         let movie = Movie(id: movieResult.id,
                                           title: movieResult.title,
                                           rating: movieResult.voteAverage,
-                                          overview: movieResult.overview,
-                                          coverImageURL: coverImageURL,
-                                          detailImageURL: detailImageURL)
+                                          coverImageURL: coverImageURL ?? "")
                         movies.append(movie)
                     }
                     
                     observer.send(value: movies)
                     observer.sendCompleted()
-                } catch let error{
-                    observer.send(error: error)
+                } catch {
+                    observer.send(error: MovieServiceError.decodingError)
                     observer.sendCompleted()
                 }
                 
@@ -157,10 +153,10 @@ class MovieService: MovieServiceProtocol {
     
     // MARK: Fetch movie detail
     func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error> {
-        print("\(QueryLink.shared.movieDetailQuery(id: id))")
+        print("\(QueryLink.shared.movieDetail(id: id))")
         
         return SignalProducer { observer, _ in
-            guard let resourceURL = URL(string: QueryLink.shared.movieDetailQuery(id: id)) else {
+            guard let resourceURL = URL(string: QueryLink.shared.movieDetail(id: id)) else {
                 print("unvalid URL for movie detail")
                 observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
@@ -191,8 +187,8 @@ class MovieService: MovieServiceProtocol {
                         let movieDetail = try decoder.decode(MovieDetail.self, from: data)
                         observer.send(value: movieDetail)
                         observer.sendCompleted()
-                    } catch let error{
-                        observer.send(error: error)
+                    } catch {
+                        observer.send(error: MovieServiceError.decodingError)
                         observer.sendCompleted()
                     }
                     

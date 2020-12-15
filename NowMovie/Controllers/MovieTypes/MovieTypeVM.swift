@@ -26,6 +26,16 @@ enum MovieType: CaseIterable, CustomStringConvertible {
 
 class MovieTypeVM {
     
+    let movieType: MovieType
+    
+    init(movieType: MovieType) {
+        self.movieType = movieType
+    }
+    
+    func getValue() -> String {
+        return movieType.description
+    }
+    
     func numberOfRowsInSection(_ section: Int) -> Int {
         return MovieType.allCases.count
     }

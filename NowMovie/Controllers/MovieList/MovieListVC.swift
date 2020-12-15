@@ -12,7 +12,7 @@ import ReactiveSwift
 class MovieListVC: UITableViewController {
     
     // MARK: - Properties
-    private let movieTypeDefault = MovieType.allCases[0]
+    private var movieType = MovieType.nowPlaying
     private let viewModel = MovieListVM(service: MovieService())
     private let networkHandling = NetworkHandling()
     
@@ -34,7 +34,8 @@ class MovieListVC: UITableViewController {
         setupNavigationBar()
         setupTableView()
         setupObserver()
-        viewModel.fetchMovies(type: movieTypeDefault)
+        setupPullToRefresh()
+        viewModel.fetchMovies(type: movieType)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,15 +67,19 @@ class MovieListVC: UITableViewController {
     
     // MARK: - Helpers
     private func setupObserver() {
-        viewModel.movies.producer.startWithResult { [weak self] (_) in
-            self?.tableView.reloadData()
+        viewModel.movies.producer.startWithResult { [weak self] _ in
             print("Get API")
+            self?.tableView.refreshControl?.endRefreshing()
+            self?.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+                self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.title = movieTypeDefault.description
+        navigationItem.title = movieType.description
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "flame"),
                                                             style: .done,
                                                             target: self,
@@ -89,9 +94,16 @@ class MovieListVC: UITableViewController {
         tableView.showsVerticalScrollIndicator = false
     }
     
+    private func setupPullToRefresh() {
+        let refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.refreshControl = refreshControl
+    }
+    
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
-        let controller = MovieTypeVC()
+        let controller = MovieTypeVC(movieType: movieType)
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
@@ -100,6 +112,10 @@ class MovieListVC: UITableViewController {
     @objc private func didTapSearchButton() {
         let controller = MovieSearchVC()
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @objc private func refresh() {
+        viewModel.fetchMovies(type: movieType)
     }
 
 }
@@ -137,6 +153,7 @@ extension MovieListVC {
 extension MovieListVC: MovieTypesControllerDelegate {
     func didSelectMovieType(_ type: MovieType) {
         navigationItem.title = type.description
+        movieType = type
         viewModel.fetchMovies(type: type)
     }
     

@@ -18,7 +18,18 @@ class MovieTypeVC: UITableViewController {
     
     // MARK: - Properties
     weak var delegate: MovieTypesControllerDelegate?
-    private let viewModel = MovieTypeVM()
+    private var viewModel: MovieTypeVM?
+    private let movieType: MovieType
+    
+    init(movieType: MovieType) {
+        self.movieType = movieType
+        viewModel = MovieTypeVM(movieType: movieType)
+        super.init(style: .plain)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -51,12 +62,16 @@ class MovieTypeVC: UITableViewController {
 // MARK: - UITableViewDataSource
 extension MovieTypeVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRowsInSection(section)
+        return viewModel?.numberOfRowsInSection(section) ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = viewModel.movieTypeAtIndex(indexPath.row)
+        guard let typeName = viewModel?.movieTypeAtIndex(indexPath.row) else { return cell }
+        if viewModel?.getValue() == typeName {
+            cell.accessoryType = .checkmark
+        }
+        cell.textLabel?.text = typeName
         return cell
     }
 }
