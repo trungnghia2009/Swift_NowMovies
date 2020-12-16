@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 class MovieListCell: UITableViewCell {
-
+    
     // MARK: - Properties
     static let reuseIdentifier = String(describing: MovieListCell.self)
     

@@ -28,7 +28,7 @@ class MovieListVC: UITableViewController {
         button.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
         return button
     }()
-
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +70,7 @@ class MovieListVC: UITableViewController {
     private func setupObserver() {
         viewModel.movies.producer.startWithResult { [weak self] _ in
             guard let self = self else { return }
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
             self.tableView.refreshControl?.endRefreshing()
             self.tableView.tableFooterView = nil
             self.tableView.reloadData()
@@ -84,10 +85,14 @@ class MovieListVC: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = movieType.description
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "flame"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.and.film"),
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRightBarButton))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"),
+                                                           style: .done,
+                                                           target: self,
+                                                           action: nil)
     }
     
     private func setupTableView() {
@@ -106,15 +111,13 @@ class MovieListVC: UITableViewController {
     }
     
     private func createSpinnerFooter() -> UIView {
-            let footerView = UIView(frame: CGRect(x: 0, y: 0,
-                                                  width: view.frame.size.width,
-                                                  height: 100))
-            let spinner = UIActivityIndicatorView()
-            footerView.addSubview(spinner)
-            spinner.center = footerView.center
-            spinner.startAnimating()
-            return footerView
-        }
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        footerView.addSubview(spinner)
+        spinner.center = footerView.center
+        spinner.startAnimating()
+        return footerView
+    }
     
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
@@ -132,7 +135,7 @@ class MovieListVC: UITableViewController {
     @objc private func refresh() {
         viewModel.fetchMovies(type: movieType)
     }
-
+    
 }
 
 
@@ -178,6 +181,7 @@ extension MovieListVC {
             tableView.tableFooterView = createSpinnerFooter()
             isScrollToTop = false
             viewModel.setIsPaginating(value: true)
+            navigationItem.rightBarButtonItem?.isEnabled = false
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 self.viewModel.fetchMoreMovies(type: self.movieType)
             }
@@ -187,6 +191,10 @@ extension MovieListVC {
 
 // MARK: - MovieTypesControllerDelegate
 extension MovieListVC: MovieTypesControllerDelegate {
+    func didSelectExit() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     func didSelectMovieType(_ type: MovieType) {
         navigationItem.title = type.description
         movieType = type

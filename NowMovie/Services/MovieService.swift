@@ -65,11 +65,11 @@ class MovieService: MovieServiceProtocol {
             }
             
             guard let httpResponse = response as? HTTPURLResponse,
-                (200...299).contains(httpResponse.statusCode) else {
-                    print("Error with the response")
-                    observer.send(error: MovieServiceError.statusCodeError)
-                    observer.sendCompleted()
-                    return
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Error with the response")
+                observer.send(error: MovieServiceError.statusCodeError)
+                observer.sendCompleted()
+                return
             }
             
             if let data = data {
@@ -173,11 +173,11 @@ class MovieService: MovieServiceProtocol {
                 }
                 
                 guard let httpResponse = response as? HTTPURLResponse,
-                    (200...299).contains(httpResponse.statusCode) else {
-                        print("Error with the response")
-                        observer.send(error: MovieServiceError.statusCodeError)
-                        observer.sendCompleted()
-                        return
+                      (200...299).contains(httpResponse.statusCode) else {
+                    print("Error with the response")
+                    observer.send(error: MovieServiceError.statusCodeError)
+                    observer.sendCompleted()
+                    return
                 }
                 
                 // Handle data

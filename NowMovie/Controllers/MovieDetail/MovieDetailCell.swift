@@ -9,7 +9,7 @@
 import UIKit
 
 class MovieDetailCell: UITableViewCell {
-
+    
     // MARK: Properties
     static let reuseIdentifier = String(describing: MovieDetailCell.self)
     var viewModel: MovieDetailVM? {
@@ -60,5 +60,5 @@ class MovieDetailCell: UITableViewCell {
         guard let viewModel = viewModel else { return }
         descriptionLabel.text = viewModel.overview
     }
-
+    
 }

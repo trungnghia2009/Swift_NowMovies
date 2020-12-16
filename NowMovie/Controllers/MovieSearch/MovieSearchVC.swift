@@ -11,7 +11,7 @@ import ReactiveCocoa
 import ReactiveSwift
 
 class MovieSearchVC: UITableViewController {
-
+    
     // MARK: - Properties
     private let searchController = UISearchController()
     private let viewModel = MovieSearchVM(service: MovieService())
@@ -67,7 +67,7 @@ class MovieSearchVC: UITableViewController {
         searchController.searchBar.searchTextField.returnKeyType = .done
         navigationItem.searchController = searchController
         definesPresentationContext = false
-
+        
         // Using debounce for sending key
         searchController.searchBar.searchTextField.reactive
             .controlEvents(.editingChanged)
@@ -77,7 +77,7 @@ class MovieSearchVC: UITableViewController {
                     self?.viewModel.searchMovies(searchKey: text)
                 }
                 
-        }
+            }
     }
     
     private func setupTableView() {
@@ -95,7 +95,7 @@ class MovieSearchVC: UITableViewController {
 extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.numberOfRowsInSection(section) == 0 {
-            tableView.setEmptyMessage(message: "There is no movie", size: 20)
+            tableView.setEmptyMessage(message: "There is no movie.", size: 20)
         } else {
             tableView.restore()
         }

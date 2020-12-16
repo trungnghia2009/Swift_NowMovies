@@ -37,7 +37,7 @@ class MovieSearchVM {
                 case .failure(let error):
                     print(error)
                 }
-        }
+            }
     }
     
     func clearObservation() {

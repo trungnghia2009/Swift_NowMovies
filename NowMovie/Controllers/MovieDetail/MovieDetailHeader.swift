@@ -14,7 +14,7 @@ protocol MovieDetailHeaderDelegate: class {
 }
 
 class MovieDetailHeader: UIView {
-
+    
     // MARK: Properties
     weak var delegate: MovieDetailHeaderDelegate?
     private let viewModel: MovieDetailVM
@@ -79,7 +79,7 @@ class MovieDetailHeader: UIView {
         self.viewModel = viewModel
         super.init(frame: .zero)
         backgroundColor = .systemBackground
-
+        
         // Movie image
         var heightPlus: CGFloat = 0
         if UIScreen.main.traitCollection.userInterfaceIdiom == .pad {
@@ -116,9 +116,9 @@ class MovieDetailHeader: UIView {
         // Play trailer button
         addSubview(playTrailerView)
         playTrailerView.anchor(top: movieImageView.bottomAnchor,
-                                 right: self.safeAreaLayoutGuide.rightAnchor,
-                                 paddingTop: -35,
-                                 paddingRight: 18)
+                               right: self.safeAreaLayoutGuide.rightAnchor,
+                               paddingTop: -35,
+                               paddingRight: 18)
         
         // Album button
         addSubview(albumView)

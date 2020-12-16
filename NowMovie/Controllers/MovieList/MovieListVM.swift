@@ -36,7 +36,7 @@ class MovieListVM {
     func fetchMovies(type: MovieType) {
         service?.currentMoviePage = 1
         disposes += service?.fetchMovies(type)
-        .observe(on: UIScheduler())
+            .observe(on: UIScheduler())
             .startWithResult{ [weak self] (result) in
                 switch result {
                 case .success(let movies):
@@ -46,13 +46,13 @@ class MovieListVM {
                 case .failure(let error):
                     print(error)
                 }
-        }
+            }
     }
     
     func fetchMoreMovies(type: MovieType) {
         service?.currentMoviePage += 1
         disposes += service?.fetchMovies(type)
-        .observe(on: UIScheduler())
+            .observe(on: UIScheduler())
             .startWithResult{ [weak self] (result) in
                 switch result {
                 case .success(let movies):
@@ -62,7 +62,7 @@ class MovieListVM {
                 case .failure(let error):
                     print(error)
                 }
-        }
+            }
     }
     
     func clearObservation() {

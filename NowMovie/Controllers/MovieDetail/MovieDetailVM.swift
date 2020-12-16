@@ -10,7 +10,7 @@ import Foundation
 import ReactiveSwift
 
 class MovieDetailVM {
-
+    
     private var disposes = CompositeDisposable()
     var movieDetail = MutableProperty<MovieDetail?>(nil)
     private var service: MovieServiceProtocol?
@@ -36,7 +36,7 @@ class MovieDetailVM {
     func clearObservation() {
         disposes.dispose()
     }
-      
+    
     var id: Int {
         return movieDetail.value?.id ?? 0
     }
@@ -64,6 +64,5 @@ class MovieDetailVM {
     var overview: String {
         return movieDetail.value?.overview ?? "No overview"
     }
-        
     
 }
