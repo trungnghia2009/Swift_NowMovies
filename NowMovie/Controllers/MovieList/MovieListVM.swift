@@ -14,6 +14,7 @@ class MovieListVM {
     private var disposes = CompositeDisposable()
     private(set) var movies = MutableProperty<[Movie]>([])
     private var service: MovieServiceProtocol?
+    private(set) var isPaginating = true
     
     init(service: MovieServiceProtocol) {
         self.service = service
@@ -27,13 +28,37 @@ class MovieListVM {
         return movies.value[index]
     }
     
+    func setIsPaginating(value: Bool) {
+        isPaginating = value
+    }
+    
+    
     func fetchMovies(type: MovieType) {
+        service?.currentMoviePage = 1
         disposes += service?.fetchMovies(type)
         .observe(on: UIScheduler())
             .startWithResult{ [weak self] (result) in
                 switch result {
                 case .success(let movies):
                     self?.movies.value = movies
+                    self?.isPaginating = false
+                    print("Get API page \(self?.service?.currentMoviePage ?? 0) for \(type.description)")
+                case .failure(let error):
+                    print(error)
+                }
+        }
+    }
+    
+    func fetchMoreMovies(type: MovieType) {
+        service?.currentMoviePage += 1
+        disposes += service?.fetchMovies(type)
+        .observe(on: UIScheduler())
+            .startWithResult{ [weak self] (result) in
+                switch result {
+                case .success(let movies):
+                    self?.movies.value.append(contentsOf: movies)
+                    self?.isPaginating = false
+                    print("Get API page \(self?.service?.currentMoviePage ?? 0) for \(type.description)")
                 case .failure(let error):
                     print(error)
                 }

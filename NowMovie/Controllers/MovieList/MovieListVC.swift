@@ -15,6 +15,7 @@ class MovieListVC: UITableViewController {
     private var movieType = MovieType.nowPlaying
     private let viewModel = MovieListVM(service: MovieService())
     private let networkHandling = NetworkHandling()
+    private var isScrollToTop = false
     
     private let searchButton: UIButton = {
         let button = UIButton(type: .system)
@@ -68,11 +69,14 @@ class MovieListVC: UITableViewController {
     // MARK: - Helpers
     private func setupObserver() {
         viewModel.movies.producer.startWithResult { [weak self] _ in
-            print("Get API")
-            self?.tableView.refreshControl?.endRefreshing()
-            self?.tableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
-                self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            guard let self = self else { return }
+            self.tableView.refreshControl?.endRefreshing()
+            self.tableView.tableFooterView = nil
+            self.tableView.reloadData()
+            if self.isScrollToTop {
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+                    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+                }
             }
         }
     }
@@ -100,6 +104,17 @@ class MovieListVC: UITableViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
+    
+    private func createSpinnerFooter() -> UIView {
+            let footerView = UIView(frame: CGRect(x: 0, y: 0,
+                                                  width: view.frame.size.width,
+                                                  height: 100))
+            let spinner = UIActivityIndicatorView()
+            footerView.addSubview(spinner)
+            spinner.center = footerView.center
+            spinner.startAnimating()
+            return footerView
+        }
     
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
@@ -149,11 +164,34 @@ extension MovieListVC {
     }
 }
 
+
+// MARK: UIScrollViewDelegate
+extension MovieListVC {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - 10 - scrollView.frame.size.height) {
+            guard !viewModel.isPaginating else {
+                // We are already fetching more data
+                return
+            }
+            print("Fetch more movies")
+            tableView.tableFooterView = createSpinnerFooter()
+            isScrollToTop = false
+            viewModel.setIsPaginating(value: true)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.viewModel.fetchMoreMovies(type: self.movieType)
+            }
+        }
+    }
+}
+
 // MARK: - MovieTypesControllerDelegate
 extension MovieListVC: MovieTypesControllerDelegate {
     func didSelectMovieType(_ type: MovieType) {
         navigationItem.title = type.description
         movieType = type
+        isScrollToTop = true
+        viewModel.setIsPaginating(value: true)
         viewModel.fetchMovies(type: type)
     }
     

@@ -30,7 +30,6 @@
 		BA478B7725884B5C00294832 /* Test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA478B7625884B5C00294832 /* Test1.swift */; };
 		BA478B7F25884BBB00294832 /* UnitTest1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA478B7E25884BBB00294832 /* UnitTest1.swift */; };
 		BA478BD22588AC8100294832 /* movie.json in Resources */ = {isa = PBXBuildFile; fileRef = BA478BD12588AC8100294832 /* movie.json */; };
-		BA478BD72588AD8F00294832 /* cat.json in Resources */ = {isa = PBXBuildFile; fileRef = BA478BD62588AD8F00294832 /* cat.json */; };
 		BA478BDF2588ADE100294832 /* love.json in Resources */ = {isa = PBXBuildFile; fileRef = BA478BDE2588ADE100294832 /* love.json */; };
 		BA5CEF0725403B8800C802DD /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5CEF0625403B8800C802DD /* Cast.swift */; };
 		BA84F5C42522C157004BDC7F /* MovieDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA84F5C32522C157004BDC7F /* MovieDetailHeader.swift */; };
@@ -95,7 +94,6 @@
 		BA478B7625884B5C00294832 /* Test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = SOURCE_ROOT; };
 		BA478B7E25884BBB00294832 /* UnitTest1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTest1.swift; sourceTree = SOURCE_ROOT; };
 		BA478BD12588AC8100294832 /* movie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = movie.json; sourceTree = "<group>"; };
-		BA478BD62588AD8F00294832 /* cat.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat.json; sourceTree = "<group>"; };
 		BA478BDE2588ADE100294832 /* love.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = love.json; sourceTree = "<group>"; };
 		BA5CEF0625403B8800C802DD /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		BA84F5C32522C157004BDC7F /* MovieDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailHeader.swift; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				BA478BDE2588ADE100294832 /* love.json */,
-				BA478BD62588AD8F00294832 /* cat.json */,
 				BA478BD12588AC8100294832 /* movie.json */,
 			);
 			path = Animation;
@@ -446,7 +443,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA478BD72588AD8F00294832 /* cat.json in Resources */,
 				BA478BDF2588ADE100294832 /* love.json in Resources */,
 				BADB7B5B253E81C500EBC311 /* InternetConnectErrorHandling.storyboard in Resources */,
 				BA478BD22588AC8100294832 /* movie.json in Resources */,

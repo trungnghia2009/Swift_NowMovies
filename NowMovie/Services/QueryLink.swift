@@ -12,10 +12,10 @@ struct QueryLink {
     static let shared = QueryLink()
     private init() {}
     
-    let nowPlaying = "https://api.themoviedb.org/3/movie/now_playing?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-    let popular = "https://api.themoviedb.org/3/movie/popular?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-    let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda"
-    let upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda"
+    let nowPlaying = "https://api.themoviedb.org/3/movie/now_playing?api_key=989854c6c0be60cc4b2c40eb24cddeda&page="
+    let popular = "https://api.themoviedb.org/3/movie/popular?api_key=989854c6c0be60cc4b2c40eb24cddeda&page="
+    let topRated = "https://api.themoviedb.org/3/movie/top_rated?api_key=989854c6c0be60cc4b2c40eb24cddeda&page="
+    let upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=989854c6c0be60cc4b2c40eb24cddeda&page="
     let search = "https://api.themoviedb.org/3/search/movie?api_key=989854c6c0be60cc4b2c40eb24cddeda&query="
     let coverImageHeader = "https://image.tmdb.org/t/p/w200"
     let detailImageHeader = "https://image.tmdb.org/t/p/original"

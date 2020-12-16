@@ -48,11 +48,13 @@ protocol MovieServiceProtocol {
     func fetchMovies(_ type: MovieType) -> SignalProducer<[Movie], Error>
     func searchMovies(_ searchKey: String) -> SignalProducer<[Movie], Error>
     func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error>
+    var currentMoviePage: Int { get set }
 }
 
 class MovieService: MovieServiceProtocol {
     
     private var resourceURL: URL?
+    var currentMoviePage = 1
     
     fileprivate func handleURLSession(_ resourceURL: URL, _ observer: Signal<[Movie], Error>.Observer) {
         URLSession.shared.dataTask(with: resourceURL) { (data, response, error) in
@@ -113,13 +115,13 @@ class MovieService: MovieServiceProtocol {
         
         switch type {
         case .nowPlaying:
-            resourceURL = URL(string: nowPlayingQuery)
+            resourceURL = URL(string: nowPlayingQuery + "\(currentMoviePage)")
         case .popular:
-            resourceURL = URL(string: popularQuery)
+            resourceURL = URL(string: popularQuery + "\(currentMoviePage)")
         case .topRated:
-            resourceURL = URL(string: topRatedQuery)
+            resourceURL = URL(string: topRatedQuery + "\(currentMoviePage)")
         case .upcoming:
-            resourceURL = URL(string: upcomingQuery)
+            resourceURL = URL(string: upcomingQuery + "\(currentMoviePage)")
         }
         
         return SignalProducer { [weak self] observer, _ in
