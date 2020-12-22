@@ -64,8 +64,7 @@ class FirstScreen: UIViewController {
     
     // MARK: Selectors
     @objc private func didTapButton() {
-        let controller = MovieListVC()
-        navigationController?.pushViewController(controller, animated: true)
+        PresenterManager.shared.show(vc: .containerController)
     }
     
 

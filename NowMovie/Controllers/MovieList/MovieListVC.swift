@@ -9,9 +9,14 @@
 import UIKit
 import ReactiveSwift
 
+protocol MovieListVCDelegate: class {
+    func didTapMenuButton()
+}
+
 class MovieListVC: UITableViewController {
     
     // MARK: - Properties
+    weak var delegate: MovieListVCDelegate?
     private var movieType = MovieType.nowPlaying
     private let viewModel = MovieListVM(service: MovieService())
     private let networkHandling = NetworkHandling()
@@ -92,7 +97,7 @@ class MovieListVC: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"),
                                                            style: .done,
                                                            target: self,
-                                                           action: nil)
+                                                           action: #selector(didTapLeftBarButton))
     }
     
     private func setupTableView() {
@@ -125,6 +130,10 @@ class MovieListVC: UITableViewController {
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         present(nav, animated: true)
+    }
+    
+    @objc private func didTapLeftBarButton() {
+        delegate?.didTapMenuButton()
     }
     
     @objc private func didTapSearchButton() {
@@ -182,7 +191,7 @@ extension MovieListVC {
             isScrollToTop = false
             viewModel.setIsPaginating(value: true)
             navigationItem.rightBarButtonItem?.isEnabled = false
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
                 self.viewModel.fetchMoreMovies(type: self.movieType)
             }
         }
@@ -192,7 +201,7 @@ extension MovieListVC {
 // MARK: - MovieTypesControllerDelegate
 extension MovieListVC: MovieTypesControllerDelegate {
     func didSelectExit() {
-        navigationController?.popViewController(animated: true)
+        PresenterManager.shared.show(vc: .firstScreenController)
     }
     
     func didSelectMovieType(_ type: MovieType) {
