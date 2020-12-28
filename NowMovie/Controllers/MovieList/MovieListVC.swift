@@ -90,7 +90,7 @@ class MovieListVC: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = movieType.description
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.and.film"),
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "film_icon"),
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(didTapRightBarButton))
@@ -166,6 +166,40 @@ extension MovieListVC {
     }
 }
 
+// MARK: Handle context menu
+extension MovieListVC {
+    override func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let index = indexPath.row
+        let identifier = "\(index)" as NSString
+        // let selectedMovie = viewModel.movieAtIndex(index)
+        
+        let contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { (_) -> UIMenu? in
+            let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { (_) in
+                
+            }
+            
+            let likeAction = UIAction(title: "Give me a like", image: UIImage(systemName: "hand.thumbsup")) { (_) in
+                
+            }
+            
+            return UIMenu.init(title: "", children: [shareAction, likeAction])
+        }
+        return contextMenu
+    }
+    
+    // Perform preview action
+    override func tableView(_ tableView: UITableView, willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        guard
+            let identifier = configuration.identifier as? String,
+            let index = Int(identifier)
+        else { return }
+        
+        let selectedMovieId = viewModel.movieAtIndex(index).id
+        let controller = MovieDetailVC(id: selectedMovieId)
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+}
 
 // MARK: - UITableViewDelegate
 extension MovieListVC {
