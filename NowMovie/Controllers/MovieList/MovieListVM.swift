@@ -32,7 +32,6 @@ class MovieListVM {
         isPaginating = value
     }
     
-    
     func fetchMovies(type: MovieType) {
         service?.currentMoviePage = 1
         disposes += service?.fetchMovies(type)
@@ -42,9 +41,22 @@ class MovieListVM {
                 case .success(let movies):
                     self?.movies.value = movies
                     self?.isPaginating = false
-                    print("Get API page \(self?.service?.currentMoviePage ?? 0) for \(type.description)")
                 case .failure(let error):
                     print(error)
+                    if let error = error as? MovieServiceError {
+                        switch error {
+                        case .unvalidURL:
+                            print(error.localizedDescription)
+                        case .statusCodeError:
+                            print(error.localizedDescription)
+                        case .dataError:
+                            print(error.localizedDescription)
+                        case .decodingError:
+                            print(error.localizedDescription)
+                        case .urlSessionError(let currentError):
+                            print(currentError)
+                        }
+                    }
                 }
             }
     }

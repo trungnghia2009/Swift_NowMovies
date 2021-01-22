@@ -42,6 +42,7 @@ enum MovieServiceError: Error {
     case statusCodeError
     case dataError
     case decodingError
+    case urlSessionError(String)
 }
 
 protocol MovieServiceProtocol {
@@ -59,8 +60,7 @@ class MovieService: MovieServiceProtocol {
     fileprivate func handleURLSession(_ resourceURL: URL, _ observer: Signal<[Movie], Error>.Observer) {
         URLSession.shared.dataTask(with: resourceURL) { (data, response, error) in
             if let error = error {
-                print(error.localizedDescription)
-                observer.send(error: error)
+                observer.send(error: MovieServiceError.urlSessionError(error.localizedDescription))
                 observer.sendCompleted()
             }
             
