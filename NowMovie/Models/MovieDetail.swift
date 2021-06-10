@@ -19,6 +19,7 @@ struct MovieDetail: Decodable {
     let adult: Bool
     let backdropPath: String
     let genres: [Genres]
+    let homepage: String
     
 }
 

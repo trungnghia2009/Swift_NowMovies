@@ -14,7 +14,6 @@ class InternetConnectErrorHandling: UIViewController {
     @IBOutlet var lineView: UIView!
     private let networkHandling = NetworkHandling()
     
-    
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +32,10 @@ class InternetConnectErrorHandling: UIViewController {
     }
     
     // MARK: IBAction
-    @IBAction func didTapRetryButton(_ sender: UIButton) {
-        print("Retry connection...")
+    @IBAction func didTapSettingWifi(_ sender: UIButton) {
+        guard let settingUrl = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(settingUrl, options: [:], completionHandler: nil)
+        print("Go to Setting...")
     }
     
 

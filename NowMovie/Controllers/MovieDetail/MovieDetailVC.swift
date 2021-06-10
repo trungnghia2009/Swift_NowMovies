@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieDetailVC: UITableViewController {
     
@@ -95,6 +96,23 @@ extension MovieDetailVC {
 
 // MARK: MovieDetailHeaderDelegate
 extension MovieDetailVC: MovieDetailHeaderDelegate {
+    func didTapAlbumButton() {
+        print("Did Tap Album button...")
+    }
+    
+    func didTapShareButton() {
+        print("Did Tap Share button...")
+        let title = viewModel.title
+        guard let website = URL(string: viewModel.homepage) else { return }
+        let items: [Any] = [title, website]
+        let ac = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(ac, animated: true, completion: nil)
+    }
+    
+    func didTapFavoriteButton() {
+        print("Did Tap Favorite button...")
+    }
+    
     func didTapPlayTrailerButton() {
         print("Did Tap Play Trailer button...")
     }

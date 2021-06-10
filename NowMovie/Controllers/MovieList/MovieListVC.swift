@@ -174,11 +174,11 @@ extension MovieListVC {
         // let selectedMovie = viewModel.movieAtIndex(index)
         
         let contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { (_) -> UIMenu? in
-            let shareAction = UIAction(title: "Share", image: UIImage(systemName: "square.and.arrow.up")) { (_) in
+            let shareAction = UIAction(title: "Play trailer", image: UIImage(systemName: "video")) { (_) in
                 
             }
             
-            let likeAction = UIAction(title: "Give me a like", image: UIImage(systemName: "hand.thumbsup")) { (_) in
+            let likeAction = UIAction(title: "Add to favorites", image: UIImage(systemName: "heart")) { (_) in
                 
             }
             

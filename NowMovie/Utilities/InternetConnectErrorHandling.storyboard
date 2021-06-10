@@ -36,7 +36,7 @@
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
                                 <state key="normal" title="Setting Wifi"/>
                                 <connections>
-                                    <action selector="didTapRetryButton:" destination="8Hg-sm-s5P" eventType="touchUpInside" id="VQS-Uq-8Op"/>
+                                    <action selector="didTapSettingWifi:" destination="8Hg-sm-s5P" eventType="touchUpInside" id="SxJ-W9-fg1"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-cb-Jb5">

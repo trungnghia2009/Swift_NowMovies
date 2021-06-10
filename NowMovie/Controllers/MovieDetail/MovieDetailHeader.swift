@@ -11,6 +11,9 @@ import SDWebImage
 
 protocol MovieDetailHeaderDelegate: class {
     func didTapPlayTrailerButton()
+    func didTapFavoriteButton()
+    func didTapShareButton()
+    func didTapAlbumButton()
 }
 
 class MovieDetailHeader: UIView {
@@ -18,6 +21,7 @@ class MovieDetailHeader: UIView {
     // MARK: Properties
     weak var delegate: MovieDetailHeaderDelegate?
     private let viewModel: MovieDetailVM
+    var isFavorite: Bool = false
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -63,15 +67,33 @@ class MovieDetailHeader: UIView {
         return iv
     }()
     
-    lazy var albumView: UIImageView = {
+    lazy var albumBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.setImage(UIImage(systemName: "photo.fill.on.rectangle.fill"), for: .normal)
+        btn.setDimensions(width: 40, height: 40)
+        btn.addTarget(self, action: #selector(didTapAlbumButton), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var favoriteView: UIImageView = {
         let iv = UIImageView()
-        iv.setDimensions(width: 40, height: 40)
+        iv.setDimensions(width: 25, height: 25)
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
+        iv.image = UIImage(systemName: "heart")
         iv.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapPlayButton))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapFavoriteButton))
         iv.addGestureRecognizer(tapGesture)
         return iv
+    }()
+    
+    lazy var shareBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        btn.setDimensions(width: 40, height: 40)
+        btn.addTarget(self, action: #selector(didTapShareButton), for: .touchUpInside)
+        return btn
     }()
     
     // MARK: Lifecycle
@@ -103,6 +125,11 @@ class MovieDetailHeader: UIView {
                            paddingBottom: -35)
         ratingLabel.text = viewModel.rating
         
+        // Favorite button
+        addSubview(favoriteView)
+        favoriteView.centerY(inView: ratingLabel)
+        favoriteView.anchor(left: ratingLabel.rightAnchor, paddingLeft: 10)
+        
         // Movie title
         addSubview(titleLabel)
         titleLabel.anchor(top: movieImageView.bottomAnchor,
@@ -121,8 +148,13 @@ class MovieDetailHeader: UIView {
                                paddingRight: 18)
         
         // Album button
-        addSubview(albumView)
-        albumView.anchor(left: titleLabel.leftAnchor, bottom: titleLabel.topAnchor, paddingBottom: 10)
+        addSubview(albumBtn)
+        albumBtn.anchor(left: titleLabel.leftAnchor, bottom: titleLabel.topAnchor, paddingBottom: 10)
+        
+        // Share button
+        addSubview(shareBtn)
+        shareBtn.centerY(inView: albumBtn)
+        shareBtn.anchor(left: albumBtn.rightAnchor, paddingLeft: 10)
     }
     
     required init?(coder: NSCoder) {
@@ -131,7 +163,27 @@ class MovieDetailHeader: UIView {
     
     // MARK: Helpers
     @objc private func didTapPlayButton() {
+        Helpers.shared.addHapticFeedback()
         delegate?.didTapPlayTrailerButton()
+    }
+    
+    @objc private func didTapFavoriteButton() {
+        Helpers.shared.addHapticFeedback()
+        isFavorite.toggle()
+        isFavorite ?
+            (favoriteView.image = UIImage(systemName: "heart.fill")) :
+            (favoriteView.image = UIImage(systemName: "heart"))
+        delegate?.didTapFavoriteButton()
+    }
+    
+    @objc private func didTapShareButton() {
+        Helpers.shared.addHapticFeedback()
+        delegate?.didTapShareButton()
+    }
+    
+    @objc private func didTapAlbumButton() {
+        Helpers.shared.addHapticFeedback()
+        delegate?.didTapAlbumButton()
     }
     
 }

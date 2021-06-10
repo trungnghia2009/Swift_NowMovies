@@ -131,6 +131,7 @@ class MovieService: MovieServiceProtocol {
                 observer.sendCompleted()
                 return
             }
+            print("API for movie list: \(resourceURL)")
             
             self?.handleURLSession(resourceURL, observer)
         }
@@ -155,7 +156,7 @@ class MovieService: MovieServiceProtocol {
     
     // MARK: Fetch movie detail
     func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error> {
-        print("\(QueryLink.shared.movieDetail(id: id))")
+        print("API for movie detail: \(QueryLink.shared.movieDetail(id: id))")
         
         return SignalProducer { observer, _ in
             guard let resourceURL = URL(string: QueryLink.shared.movieDetail(id: id)) else {

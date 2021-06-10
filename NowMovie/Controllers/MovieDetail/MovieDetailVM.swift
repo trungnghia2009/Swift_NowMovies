@@ -65,4 +65,8 @@ class MovieDetailVM {
         return movieDetail.value?.overview ?? "No overview"
     }
     
+    var homepage: String {
+        return movieDetail.value?.homepage ?? "No homepage"
+    }
+    
 }
