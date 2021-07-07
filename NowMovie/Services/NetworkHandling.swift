@@ -21,12 +21,12 @@ class NetworkHandling {
         do {
             try reachability.startNotifier()
         } catch {
-            print("Unable to start notifier")
+            MovieLog.error(message: "Unable to start notifier")
         }
     }
     
     func removeObserverInternetConnection() {
-        print("Remove internet observer")
+        MovieLog.info(message: "Remove internet observer")
         reachability.stopNotifier()
         NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: reachability)
     }
@@ -42,13 +42,13 @@ class NetworkHandling {
 
         switch reachability.connection {
         case .wifi:
-            print("Wifi Connection")
+            MovieLog.info(message: "Wifi Connection")
             if dismiss { controller.dismiss(animated: true) }
         case .cellular:
-            print("Cellular Connection")
+            MovieLog.info(message: "Cellular Connection")
             if dismiss { controller.dismiss(animated: true) }
         case .unavailable, .none:
-            print("No Connection")
+            MovieLog.info(message: "No Connection")
             if !dismiss { navigateToInternetErrorScreen() }
         }
     }

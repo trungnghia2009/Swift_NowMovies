@@ -57,7 +57,7 @@ class MovieListCell: UITableViewCell {
         stack.spacing = 5
         
         addSubview(stack)
-        stack.centerY(inView: movieImageView, left: movieImageView.rightAnchor, paddingLeft: 12)
+        stack.centerY(inView: self, left: movieImageView.rightAnchor, paddingLeft: 12)
         stack.anchor(right: self.rightAnchor, paddingRight: 24)
     }
     

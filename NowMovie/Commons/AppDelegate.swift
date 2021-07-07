@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("-----didFinishLaunchingWithOptions")
+        MovieLog.info(message: "didFinishLaunchingWithOptions")
         try! FileManager.default.removeItem(atPath: NSHomeDirectory()+"/Library/SplashBoard")
         
         do {
@@ -37,28 +37,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("-----willFinishLaunchingWithOptions")
+        MovieLog.info(message: "willFinishLaunchingWithOptions")
         return true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        print("-----applicationDidBecomeActive")
+        MovieLog.info(message: "applicationDidBecomeActive")
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        print("-----applicationWillResignActive")
+        MovieLog.info(message: "applicationWillResignActive")
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        print("-----applicationDidEnterBackground")
+        MovieLog.info(message: "applicationDidEnterBackground")
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        print("-----applicationWillEnterForeground")
+        MovieLog.info(message: "applicationWillEnterForeground")
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        print("-----applicationWillTerminate")
+        MovieLog.info(message: "applicationWillTerminate")
     }
 
 }
