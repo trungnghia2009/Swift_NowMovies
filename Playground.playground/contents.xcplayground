@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios'>
+    <pages>
+        <page name='Initializer Injection'/>
+        <page name='Property Injection'/>
+        <page name='InterfaceInjection'/>
+        <page name='Class_Init'/>
+        <page name='Struct_Init'/>
+        <page name='Generic Data Struct'/>
+        <page name='Generic Function'/>
+        <page name='ATM problem'/>
+        <page name='== vs ==='/>
+        <page name='LoggerTesting'/>
+        <page name='Testing'/>
+    </pages>
+</playground>
