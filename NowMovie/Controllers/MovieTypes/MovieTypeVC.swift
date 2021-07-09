@@ -116,6 +116,5 @@ extension MovieTypeVC {
         dismiss(animated: true) {
             self.delegate?.didSelectMovieType(type)
         }
-        
     }
 }

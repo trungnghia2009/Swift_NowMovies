@@ -70,11 +70,15 @@ class MovieListVM {
                 case .success(let movies):
                     self?.movies.value.append(contentsOf: movies)
                     self?.isPaginating = false
-                    print("Get API page \(self?.service?.currentMoviePage ?? 0) for \(type.description)")
+                    MovieLog.info(message: "Get API page \(self?.service?.currentMoviePage ?? 0) for \(type.description)")
                 case .failure(let error):
                     print(error)
                 }
             }
+    }
+    
+    func fetchMovieDetail(id: String) {
+    
     }
     
     func clearObservation() {

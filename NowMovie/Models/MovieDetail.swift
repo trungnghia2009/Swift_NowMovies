@@ -20,7 +20,6 @@ struct MovieDetail: Decodable {
     let backdropPath: String
     let genres: [Genres]
     let homepage: String
-    
 }
 
 struct Genres: Decodable {

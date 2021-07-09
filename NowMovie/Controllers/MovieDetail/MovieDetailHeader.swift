@@ -67,8 +67,8 @@ class MovieDetailHeader: UIView {
         return iv
     }()
     
-    lazy var albumBtn: UIButton = {
-        let btn = UIButton(type: .system)
+    lazy var albumBtn: ActionButton = {
+        let btn = ActionButton(type: .system)
         btn.imageView?.contentMode = .scaleAspectFit
         btn.setImage(UIImage(systemName: "photo.fill.on.rectangle.fill"), for: .normal)
         btn.setDimensions(width: 40, height: 40)
@@ -87,8 +87,8 @@ class MovieDetailHeader: UIView {
         return iv
     }()
     
-    lazy var shareBtn: UIButton = {
-        let btn = UIButton(type: .system)
+    lazy var shareBtn: ActionButton = {
+        let btn = ActionButton(type: .system)
         btn.imageView?.contentMode = .scaleAspectFit
         btn.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         btn.setDimensions(width: 40, height: 40)
@@ -177,13 +177,10 @@ class MovieDetailHeader: UIView {
     }
     
     @objc private func didTapShareButton() {
-        Helpers.shared.addHapticFeedback()
         delegate?.didTapShareButton()
     }
     
     @objc private func didTapAlbumButton() {
-        Helpers.shared.addHapticFeedback()
         delegate?.didTapAlbumButton()
     }
-    
 }

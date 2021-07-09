@@ -14,7 +14,7 @@ class MovieSearchVC: UITableViewController {
     
     // MARK: - Properties
     private let searchController = UISearchController()
-    private let viewModel = MovieSearchVM(service: MovieService())
+    private let viewModel = MovieSearchVM(service: MovieService(), state: .begin)
     private let networkHandling = NetworkHandling()
     
     // MARK: - Lifecycle
@@ -95,7 +95,7 @@ class MovieSearchVC: UITableViewController {
 extension MovieSearchVC {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.numberOfRowsInSection(section) == 0 {
-            tableView.setEmptyMessage(message: "There is no movie.", size: 20)
+            tableView.setEmptyMessage(message: viewModel.setTextResult(), size: 20)
         } else {
             tableView.restore()
         }
@@ -129,6 +129,7 @@ extension MovieSearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchKey = searchController.searchBar.text else { return }
         if searchKey.count == 0 {
+            viewModel.state = .begin
             viewModel.movies.value.removeAll()
         }
     }

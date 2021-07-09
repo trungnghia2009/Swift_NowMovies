@@ -25,7 +25,7 @@ enum MovieType: CaseIterable, CustomStringConvertible {
 }
 
 class MovieTypeVM {
-    
+
     let movieType: MovieType
     
     init(movieType: MovieType) {
@@ -43,6 +43,4 @@ class MovieTypeVM {
     func movieTypeAtIndex(_ index: Int) -> String {
         return MovieType.allCases[index].description
     }
-    
-    
 }

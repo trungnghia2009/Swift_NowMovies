@@ -66,7 +66,7 @@ class MovieService: MovieServiceProtocol {
             
             guard let httpResponse = response as? HTTPURLResponse,
                   (200...299).contains(httpResponse.statusCode) else {
-                print("Error with the response")
+                MovieLog.info(message: "Error with the response")
                 observer.send(error: MovieServiceError.statusCodeError)
                 observer.sendCompleted()
                 return
@@ -126,13 +126,12 @@ class MovieService: MovieServiceProtocol {
         
         return SignalProducer { [weak self] observer, _ in
             guard let resourceURL = self?.resourceURL else {
-                print("URL for \(type.description) got error")
+                MovieLog.info(message: "URL for \(type.description) got error")
                 observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
             }
-            print("API for movie list: \(resourceURL)")
-            
+            MovieLog.info(message: "API for movie list: \(resourceURL)")
             self?.handleURLSession(resourceURL, observer)
         }
     }
@@ -140,11 +139,11 @@ class MovieService: MovieServiceProtocol {
     // MARK: - Search Movies
     func searchMovies(_ searchKey: String) -> SignalProducer<[Movie], Error> {
         return SignalProducer { [weak self] observer, _ in
-            print("Searching: " + searchKey)
+            MovieLog.info(message: "Searching: \(searchKey)")
             let transformSearchKey = searchKey.replacingOccurrences(of: " ", with: "%20")
             
             guard let resourceURL = URL(string: searchQuery + transformSearchKey) else {
-                print("unvalid URL")
+                MovieLog.info(message: "invalid URL")
                 observer.send(error: MovieServiceError.unvalidURL)
                 observer.sendCompleted()
                 return
@@ -156,7 +155,7 @@ class MovieService: MovieServiceProtocol {
     
     // MARK: Fetch movie detail
     func fetchMovieDetail(id: Int) -> SignalProducer<MovieDetail, Error> {
-        print("API for movie detail: \(QueryLink.shared.movieDetail(id: id))")
+        MovieLog.info(message: "API for movie detail: \(QueryLink.shared.movieDetail(id: id))")
         
         return SignalProducer { observer, _ in
             guard let resourceURL = URL(string: QueryLink.shared.movieDetail(id: id)) else {
@@ -175,7 +174,7 @@ class MovieService: MovieServiceProtocol {
                 
                 guard let httpResponse = response as? HTTPURLResponse,
                       (200...299).contains(httpResponse.statusCode) else {
-                    print("Error with the response")
+                    MovieLog.info(message: "Error with the response")
                     observer.send(error: MovieServiceError.statusCodeError)
                     observer.sendCompleted()
                     return
@@ -210,5 +209,4 @@ class MovieService: MovieServiceProtocol {
     func fetchMovieProperty(id: Int, type: MoviePropertyType) {
         
     }
-    
 }

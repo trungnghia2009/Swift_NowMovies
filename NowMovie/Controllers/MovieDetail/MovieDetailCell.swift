@@ -60,5 +60,4 @@ class MovieDetailCell: UITableViewCell {
         guard let viewModel = viewModel else { return }
         descriptionLabel.text = viewModel.overview
     }
-    
 }

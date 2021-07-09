@@ -37,7 +37,7 @@ class MovieDetailVC: UITableViewController {
     
     deinit {
         viewModel.clearObservation()
-        print("Clear observation for Movie List screen")
+        MovieLog.info(message: "Clear observation for Movie List screen")
     }
     
     // MARK: - Helpers
@@ -48,6 +48,7 @@ class MovieDetailVC: UITableViewController {
     
     private func setupTableView() {
         tableView.register(MovieDetailCell.self, forCellReuseIdentifier: MovieDetailCell.reuseIdentifier)
+        tableView.bounces = false
         tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
     }
@@ -55,10 +56,9 @@ class MovieDetailVC: UITableViewController {
     private func setupObserver() {
         viewModel.movieDetail.producer.startWithResult { [weak self] (_) in
             self?.tableView.reloadData()
-            print("Got API...")
+            MovieLog.info(message: "Got API...")
         }
     }
-    
 }
 
 // MARK: UITableViewDataSource
@@ -91,17 +91,16 @@ extension MovieDetailVC {
             return 280
         }
     }
-    
 }
 
 // MARK: MovieDetailHeaderDelegate
 extension MovieDetailVC: MovieDetailHeaderDelegate {
     func didTapAlbumButton() {
-        print("Did Tap Album button...")
+        MovieLog.info(message: "Did tap Album button...")
     }
     
     func didTapShareButton() {
-        print("Did Tap Share button...")
+        MovieLog.info(message: "Did tap Share button...")
         let title = viewModel.title
         guard let website = URL(string: viewModel.homepage) else { return }
         let items: [Any] = [title, website]
@@ -110,12 +109,10 @@ extension MovieDetailVC: MovieDetailHeaderDelegate {
     }
     
     func didTapFavoriteButton() {
-        print("Did Tap Favorite button...")
+        MovieLog.info(message: "Did tap Favorite button...")
     }
     
     func didTapPlayTrailerButton() {
-        print("Did Tap Play Trailer button...")
+        MovieLog.info(message: "Did tap Play Trailer button...")
     }
-    
-    
 }

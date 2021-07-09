@@ -22,8 +22,8 @@ class MovieListVC: UITableViewController {
     private let networkHandling = NetworkHandling()
     private var isScrollToTop = false
     
-    private let searchButton: UIButton = {
-        let button = UIButton(type: .system)
+    private let searchButton: ActionButton = {
+        let button = ActionButton(type: .system)
         button.tintColor = .white
         button.backgroundColor = .systemOrange
         button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -67,7 +67,7 @@ class MovieListVC: UITableViewController {
     
     deinit {
         viewModel.clearObservation()
-        print("Clear observation for Movie List screen")
+        MovieLog.info(message: "Clear observation for Movie List screen")
     }
     
     
@@ -101,7 +101,6 @@ class MovieListVC: UITableViewController {
     }
     
     private func setupTableView() {
-        tableView.accessibilityLabel = "List Movie table"
         tableView.register(MovieListCell.self, forCellReuseIdentifier: MovieListCell.reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 90
@@ -126,6 +125,7 @@ class MovieListVC: UITableViewController {
     
     // MARK: - Selectors
     @objc private func didTapRightBarButton() {
+        MovieLog.info(message: "Did tap movie type button")
         let controller = MovieTypeVC(movieType: movieType)
         controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
@@ -133,15 +133,18 @@ class MovieListVC: UITableViewController {
     }
     
     @objc private func didTapLeftBarButton() {
+        MovieLog.info(message: "Did tap menu button")
         delegate?.didTapMenuButton()
     }
     
     @objc private func didTapSearchButton() {
+        MovieLog.info(message: "Did tap search button")
         let controller = MovieSearchVC()
         navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc private func refresh() {
+        MovieLog.info(message: "Did perform refresh action")
         viewModel.fetchMovies(type: movieType)
     }
     
@@ -173,16 +176,20 @@ extension MovieListVC {
         let identifier = "\(index)" as NSString
         // let selectedMovie = viewModel.movieAtIndex(index)
         
-        let contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { (_) -> UIMenu? in
-            let shareAction = UIAction(title: "Play trailer", image: UIImage(systemName: "video")) { (_) in
-                
+        let contextMenu = UIContextMenuConfiguration(identifier: identifier, previewProvider: nil) { [weak self] (_) -> UIMenu? in
+            let playTrailerAction = UIAction(title: "Play trailer", image: UIImage(systemName: "video")) { (_) in
+                self?.showToast(message: "The function is not implemented")
             }
             
             let likeAction = UIAction(title: "Add to favorites", image: UIImage(systemName: "heart")) { (_) in
+                self?.showToast(message: "The function is not implemented")
+            }
+
+            let shareAction = UIAction(title: "Share to someone", image: UIImage(systemName: "square.and.arrow.up")) { _ in
                 
             }
             
-            return UIMenu.init(title: "", children: [shareAction, likeAction])
+            return UIMenu.init(title: "", children: [playTrailerAction, likeAction, shareAction])
         }
         return contextMenu
     }
@@ -206,6 +213,7 @@ extension MovieListVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let id = viewModel.movieAtIndex(indexPath.row).id
         let controller = MovieDetailVC(id: id)
+        MovieLog.info(message: "Did select movie id \(id)")
         navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -220,7 +228,7 @@ extension MovieListVC {
                 // We are already fetching more data
                 return
             }
-            print("Fetch more movies")
+            MovieLog.info(message: "Fetch more movies")
             tableView.tableFooterView = createSpinnerFooter()
             isScrollToTop = false
             viewModel.setIsPaginating(value: true)
@@ -245,8 +253,4 @@ extension MovieListVC: MovieTypesControllerDelegate {
         viewModel.setIsPaginating(value: true)
         viewModel.fetchMovies(type: type)
     }
-    
-    
-    
-    
 }

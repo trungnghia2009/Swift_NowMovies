@@ -15,5 +15,4 @@ class MenuVC: UITableViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
     }
-
 }

@@ -35,8 +35,6 @@ class InternetConnectErrorHandling: UIViewController {
     @IBAction func didTapSettingWifi(_ sender: UIButton) {
         guard let settingUrl = URL(string: UIApplication.openSettingsURLString) else { return }
         UIApplication.shared.open(settingUrl, options: [:], completionHandler: nil)
-        print("Go to Setting...")
+        MovieLog.info(message: "Go to Setting...")
     }
-    
-
 }

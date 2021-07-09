@@ -84,7 +84,7 @@ class ContainerController: UIViewController {
     
     // MARK: Selectors
     @objc private func dismissMenu() {
-        print("Debug: handle dismissMenu....")
+        MovieLog.debug(message: "Handle dismissMenu....")
         isHideStatusBar = false
         animateMenu(shouldExpand: false)
     }
@@ -94,8 +94,6 @@ class ContainerController: UIViewController {
             animateMenu(shouldExpand: false)
         }
     }
-    
-
 }
 
 // MARK: MovieListVCDelegate
@@ -103,6 +101,4 @@ extension ContainerController: MovieListVCDelegate {
     func didTapMenuButton() {
         presentMenu()
     }
-    
-    
 }
