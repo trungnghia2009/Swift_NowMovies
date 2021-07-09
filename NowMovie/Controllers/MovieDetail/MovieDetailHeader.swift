@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-protocol MovieDetailHeaderDelegate: class {
+protocol MovieDetailHeaderDelegate: AnyObject {
     func didTapPlayTrailerButton()
     func didTapFavoriteButton()
     func didTapShareButton()
@@ -154,7 +154,7 @@ class MovieDetailHeader: UIView {
         // Share button
         addSubview(shareBtn)
         shareBtn.centerY(inView: albumBtn)
-        shareBtn.anchor(left: albumBtn.rightAnchor, paddingLeft: 10)
+        shareBtn.anchor(left: albumBtn.rightAnchor, paddingLeft: 5)
     }
     
     required init?(coder: NSCoder) {

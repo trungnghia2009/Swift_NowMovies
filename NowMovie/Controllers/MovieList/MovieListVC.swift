@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveSwift
 
-protocol MovieListVCDelegate: class {
+protocol MovieListVCDelegate: AnyObject {
     func didTapMenuButton()
 }
 

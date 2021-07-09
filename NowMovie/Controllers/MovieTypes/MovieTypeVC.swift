@@ -11,7 +11,7 @@ import Lottie
 
 private let reuseIdentifier = "TypeCell"
 
-protocol MovieTypesControllerDelegate: class {
+protocol MovieTypesControllerDelegate: AnyObject {
     func didSelectMovieType(_ type: MovieType)
     func didSelectExit()
 }
