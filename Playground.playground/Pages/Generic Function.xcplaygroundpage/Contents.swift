@@ -1,3 +1,3 @@
 import Foundation
 
-func pair
+print(<#T##items: Any...##Any#>)

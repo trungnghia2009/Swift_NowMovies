@@ -11,6 +11,7 @@
         <page name='ATM problem'/>
         <page name='== vs ==='/>
         <page name='LoggerTesting'/>
-        <page name='Testing'/>
+        <page name='Variadic Parameters'/>
+        <page name='Complex Algorithms Simplified'/>
     </pages>
 </playground>
