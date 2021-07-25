@@ -10,9 +10,15 @@
         <page name='Generic Function'/>
         <page name='ATM problem'/>
         <page name='== vs ==='/>
+        <page name='Self vs self'/>
+        <page name='static vs class'/>
+        <page name='Hashable'/>
         <page name='LoggerTesting'/>
         <page name='Variadic Parameters'/>
         <page name='Complex Algorithms Simplified'/>
         <page name='OnReady Design Pattern'/>
+        <page name='Deadlock'/>
+        <page name='Testing'/>
+        <page name='Testing2'/>
     </pages>
 </playground>
