@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <playground version='6.0' target-platform='ios'>
     <pages>
+        <page name='DispatchQueue-workItem'/>
+        <page name='DispatchQueue-group1'/>
+        <page name='DispatchQueue-group2'/>
+        <page name='DispatchQueue-group3'/>
+        <page name='DispatchQueue-Semaphore'/>
+        <page name='Thread Safe'/>
+        <page name='KVO and KVC'/>
+        <page name='weak-unowned'/>
+        <page name='associatedtype'/>
+        <page name='opaque return'/>
+        <page name='Memory manager - unowned'/>
+        <page name='get and set'/>
         <page name='Initializer Injection'/>
         <page name='Property Injection'/>
         <page name='InterfaceInjection'/>
-        <page name='Class_Init'/>
         <page name='Struct_Init'/>
-        <page name='Generic Data Struct'/>
-        <page name='Generic Function'/>
+        <page name='Class_Init'/>
+        <page name='Generics'/>
         <page name='ATM problem'/>
         <page name='== vs ==='/>
         <page name='Self vs self'/>
+        <page name='Protocol default value'/>
+        <page name='Protocol default func'/>
         <page name='static vs class'/>
         <page name='Hashable'/>
         <page name='LoggerTesting'/>
         <page name='Variadic Parameters'/>
+        <page name='allSatisfy'/>
         <page name='Complex Algorithms Simplified'/>
         <page name='OnReady Design Pattern'/>
         <page name='Deadlock'/>
+        <page name='Factory method'/>
         <page name='Testing'/>
         <page name='Testing2'/>
+        <page name='Subscripts'/>
     </pages>
 </playground>

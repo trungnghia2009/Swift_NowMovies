@@ -18,6 +18,13 @@ class SuperCar {
         self.type = type
     }
     
+    static func caculateSome() {
+        print("caculateSome")
+    }
+    
+    class func writeSome() {
+        print("writeSome")
+    }
 }
 
 class Car: SuperCar {
@@ -25,11 +32,18 @@ class Car: SuperCar {
         return "Black"
     }
     
+    override class func writeSome() {
+        print("write cate..")
+    }
+    
 }
 
 SuperCar.country
 SuperCar.color
+SuperCar.caculateSome()
+SuperCar.writeSome()
 
 Car.country
 Car.color
-
+Car.caculateSome()
+Car.writeSome()

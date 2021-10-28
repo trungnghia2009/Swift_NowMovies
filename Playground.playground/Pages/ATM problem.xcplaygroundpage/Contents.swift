@@ -35,30 +35,31 @@ struct ATM {
     }
     
     static let serialQueue = DispatchQueue(label: "Serial Queue")
+    static let concurrentQueue = DispatchQueue(label: "ConcurrentQueue", qos: .utility, attributes: .concurrent)
     static let lock = NSLock()
     static let semaphore = DispatchSemaphore(value: 1)
     
     func withdraw(_ account: Account, _ amount: Int) {
         
         ///Barrier
-        ATM.serialQueue.async (flags: .barrier) {
-            //self.withdrawRaw(account, amount)
-        }
+//        ATM.concurrentQueue.async (flags: .barrier) {
+//            self.withdrawRaw(account, amount)
+//        }
         
         ///Serial queue
-        ATM.serialQueue.async {
-            //self.withdrawRaw(account, amount)
-        }
+//        ATM.serialQueue.async {
+//            self.withdrawRaw(account, amount)
+//        }
         
         ///Semaphore
-        ATM.semaphore.wait()
-        withdrawRaw(account, amount)
-        ATM.semaphore.signal()
+//        ATM.semaphore.wait()
+//        withdrawRaw(account, amount)
+//        ATM.semaphore.signal()
         
         ///NSlock
-//        ATM.lock.lock()
-//        withdrawRaw(account, amount)
-//        ATM.lock.unlock()
+        ATM.lock.lock()
+        withdrawRaw(account, amount)
+        ATM.lock.unlock()
     }
     
     private func withdrawRaw(_ account: Account, _ amount: Int) {
@@ -76,17 +77,25 @@ struct ATM {
     }
 }
 
-let account = Account(name: "Nghia")
-account.balance = 1000
+
+//--------Testing area---------
+
+let user = Account(name: "Nghia")
+user.balance = 1000
 
 let atm1 = ATM("a")
 let atm2 = ATM("b")
 let atm3 = ATM("c")
 
-//atm1.withdraw(account, 600)
-//atm2.withdraw(account, 500)
+///Barrier, Serial queue
+//atm1.withdraw(user, 600)
+//atm2.withdraw(user, 700)
 
-let queue = DispatchQueue(label: "atm", qos: .utility, attributes: [.concurrent])
-queue.async { atm1.withdraw(account, 600) }
-queue.async { atm2.withdraw(account, 700) }
-queue.async { atm3.withdraw(account, 800) }
+
+///Semaphore, NSlock
+ATM.concurrentQueue.async {
+    atm1.withdraw(user, 600)
+}
+ATM.concurrentQueue.async {
+    atm2.withdraw(user, 700)
+}

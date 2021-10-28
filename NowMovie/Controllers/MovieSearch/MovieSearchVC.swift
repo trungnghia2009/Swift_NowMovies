@@ -56,6 +56,7 @@ class MovieSearchVC: UITableViewController {
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.title = "Movie Search"
+        self.navigationItem.setHidesBackButton(true, animated:true) // hide back button
     }
     
     private func configureSearchController() {
@@ -65,6 +66,7 @@ class MovieSearchVC: UITableViewController {
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.placeholder = "Search..."
         searchController.searchBar.searchTextField.returnKeyType = .done
+        searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = false
         
@@ -139,5 +141,12 @@ extension MovieSearchVC: UISearchResultsUpdating {
 extension MovieSearchVC: UISearchControllerDelegate {
     func presentSearchController(_ searchController: UISearchController) {
         searchController.searchBar.becomeFirstResponder()
+    }
+}
+
+extension MovieSearchVC: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        MovieLog.info(message: "Tapped cancel...")
+        navigationController?.popViewController(animated: true)
     }
 }
